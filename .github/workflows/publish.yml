@@ -1,0 +1,81 @@
+name: Publish to pub.dev
+
+# Push a tag <package>-vX.Y.Z on main to publish packages/<package> at version X.Y.Z:
+#   git tag sinew_models-v0.1.0 && git push origin sinew_models-v0.1.0
+# Authentication is pub.dev's automated publishing (GitHub OIDC): no stored secrets.
+# On pub.dev, each package's Admin page enables "publishing from GitHub Actions" for
+# srctool/sinew-dart with the tag pattern <package>-v{{version}}.
+# Publish in dependency order (sinew_models first): a package's version solve needs its Sinew dependencies on pub.dev.
+on:
+  push:
+    tags:
+      - 'sinew_*-v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write # for the GitHub Release
+  id-token: write # pub.dev authentication through OIDC
+
+concurrency:
+  group: publish-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish ${{ github.ref_name }}
+    # Only the organization repository publishes; tags pushed to forks do nothing.
+    if: github.repository == 'srctool/sinew-dart'
+    runs-on: ubuntu-24.04
+    # If pub.dev is set to require a GitHub Actions environment, it must be named "pub.dev".
+    environment: pub.dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Resolve the package from the tag
+        run: |
+          package="${GITHUB_REF_NAME%-v*}"
+          version="${GITHUB_REF_NAME##*-v}"
+          dir="packages/$package"
+          if [[ ! -f "$dir/pubspec.yaml" ]]; then
+            echo "::error::No package at $dir for tag $GITHUB_REF_NAME"
+            exit 1
+          fi
+          pubspec_version="$(sed -n 's/^version:[[:space:]]*//p' "$dir/pubspec.yaml" | tr -d '"'"'"'[:space:]')"
+          if [[ "$pubspec_version" != "$version" ]]; then
+            echo "::error::$dir/pubspec.yaml has version $pubspec_version, but the tag says $version"
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::$GITHUB_REF_NAME isn't on main. Tag the merge commit on main."
+            exit 1
+          fi
+          echo "PACKAGE_DIR=$dir" >> "$GITHUB_ENV"
+          echo "Publishing $package $version from $dir"
+
+      # Sets up the pub.dev OIDC credentials; Flutter's pub reads the same credentials.
+      - name: Set up Dart (pub.dev credentials)
+        uses: dart-lang/setup-dart@v1
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies (workspace)
+        run: flutter pub get
+
+      - name: Dry run
+        working-directory: ${{ env.PACKAGE_DIR }}
+        run: flutter pub publish --dry-run
+
+      - name: Publish
+        working-directory: ${{ env.PACKAGE_DIR }}
+        run: flutter pub publish --force
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          generate_release_notes: true

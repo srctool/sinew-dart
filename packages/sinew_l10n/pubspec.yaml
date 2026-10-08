@@ -1,0 +1,26 @@
+name: sinew_l10n
+description: "English and Indonesian translations of Sinew's local error messages."
+version: 0.1.0-dev.1
+repository: https://github.com/srctool/sinew-dart
+issue_tracker: https://github.com/srctool/sinew-dart/issues
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  sinew_exception: ^0.1.0-dev.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  generate: true   # `flutter gen-l10n` writes lib/src/generated; the output is committed (ADR-22)

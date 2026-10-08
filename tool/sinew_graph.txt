@@ -1,0 +1,28 @@
+# Allowed Sinew-to-Sinew dependencies (from -> to), mirroring the docs' dependency graph.
+# tool/check_graph.dart fails on any other edge, and on sinew_testing outside dev_dependencies.
+sinew_exception -> sinew_models
+sinew_paging -> sinew_models
+sinew_paging -> sinew_exception
+sinew_l10n -> sinew_exception
+sinew_riverpod -> sinew_presentation
+sinew_riverpod -> sinew_models
+sinew_riverpod -> sinew_exception
+sinew_riverpod_providers -> sinew_riverpod
+sinew_riverpod_providers -> sinew_network
+sinew_riverpod_providers -> sinew_storage
+sinew_network -> sinew_exception
+sinew_storage -> sinew_exception
+sinew_storage -> sinew_security
+sinew_camouflage -> sinew_paging
+sinew_camouflage -> sinew_exception
+sinew_camouflage -> sinew_l10n
+sinew_devtools -> sinew_network
+sinew_devtools -> sinew_storage
+sinew_devtools_ui -> sinew_devtools
+sinew_devtools_ui -> sinew_l10n
+sinew_testing -> sinew_models
+sinew_testing -> sinew_exception
+sinew_testing -> sinew_paging
+sinew_testing -> sinew_network
+sinew_testing -> sinew_storage
+sinew_testing -> sinew_security

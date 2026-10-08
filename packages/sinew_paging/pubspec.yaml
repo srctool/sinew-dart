@@ -1,0 +1,17 @@
+name: sinew_paging
+description: "Pager, PagingState and LoadType: the paging rules in one place."
+version: 0.1.0-dev.1
+repository: https://github.com/srctool/sinew-dart
+issue_tracker: https://github.com/srctool/sinew-dart/issues
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  sinew_models: ^0.1.0-dev.1
+  sinew_exception: ^0.1.0-dev.1
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.26.0

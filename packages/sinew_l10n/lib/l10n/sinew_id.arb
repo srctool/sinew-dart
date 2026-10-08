@@ -1,0 +1,17 @@
+{
+  "@@locale": "id",
+  "sinewErrorNoInternet": "Kamu sedang offline. Periksa koneksimu lalu coba lagi.",
+  "sinewErrorTimeout": "Prosesnya terlalu lama. Silakan coba lagi.",
+  "sinewErrorValidation": "Periksa kembali isian yang ditandai.",
+  "sinewErrorUnauthorized": "Sesimu telah berakhir. Silakan masuk kembali.",
+  "sinewErrorForbidden": "Kamu tidak punya akses ke halaman ini.",
+  "sinewErrorNotFound": "Data ini sudah tidak tersedia.",
+  "sinewErrorConflict": "Data ini sudah diubah oleh orang lain. Muat ulang lalu coba lagi.",
+  "sinewErrorRateLimited": "{seconds, plural, other{Terlalu banyak percobaan. Coba lagi dalam {seconds} detik.}}",
+  "sinewErrorRateLimitedNoTime": "Terlalu banyak percobaan. Coba lagi sebentar lagi.",
+  "sinewErrorServer": "Terjadi kesalahan di sistem kami.",
+  "sinewErrorUnavailable": "Layanan sedang sibuk. Silakan coba lagi.",
+  "sinewErrorGeneric": "Terjadi kesalahan.",
+  "sinewErrorStorageFull": "Penyimpanan perangkatmu penuh.",
+  "sinewErrorStillProcessing": "Masih diproses. Coba cek lagi nanti."
+}

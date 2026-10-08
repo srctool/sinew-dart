@@ -1,0 +1,24 @@
+{
+  "@@locale": "en",
+  "sinewErrorNoInternet": "You're offline. Check your connection and try again.",
+  "sinewErrorTimeout": "This is taking too long. Please try again.",
+  "sinewErrorValidation": "Please check the highlighted fields.",
+  "sinewErrorUnauthorized": "Your session has ended. Please sign in again.",
+  "sinewErrorForbidden": "You don't have access to this.",
+  "sinewErrorNotFound": "This item no longer exists.",
+  "sinewErrorConflict": "This was changed by someone else. Reload and try again.",
+  "sinewErrorRateLimited": "{seconds, plural, =1{Too many attempts. Try again in 1 second.} other{Too many attempts. Try again in {seconds} seconds.}}",
+  "sinewErrorRateLimitedNoTime": "Too many attempts. Try again in a moment.",
+  "sinewErrorServer": "Something went wrong on our side.",
+  "sinewErrorUnavailable": "The service is busy. Please try again.",
+  "sinewErrorGeneric": "Something went wrong.",
+  "sinewErrorStorageFull": "Your device is out of space.",
+  "sinewErrorStillProcessing": "This is still processing. Check again later.",
+  "@sinewErrorRateLimited": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  }
+}
