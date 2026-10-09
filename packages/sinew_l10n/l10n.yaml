@@ -3,5 +3,4 @@ template-arb-file: sinew_en.arb
 output-dir: lib/src/generated
 output-localization-file: sinew_localizations.dart
 output-class: SinewLocalizations
-synthetic-package: false
 nullable-getter: false

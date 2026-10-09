@@ -32,5 +32,8 @@ melos:
     format: dart format --set-exit-if-changed .
     graph: dart run tool/check_graph.dart
     test:
-      run: melos exec --dir-exists=test -- "if grep -q 'sdk: flutter' pubspec.yaml; then flutter test --coverage; else dart test; fi"
+      # A block scalar: the command contains "sdk: flutter", which YAML would read as a key in a plain value.
+      run: >-
+        melos exec --dir-exists=test --
+        "if grep -q 'sdk: flutter' pubspec.yaml; then flutter test --coverage; else dart test; fi"
     l10n: melos exec --scope=sinew_l10n -- flutter gen-l10n
