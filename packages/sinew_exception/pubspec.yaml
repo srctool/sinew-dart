@@ -1,5 +1,5 @@
 name: sinew_exception
-description: "AppException types, handlers, processCall, CrashReporter and Localizer."
+description: "SinewException types, handlers, processCall, CrashReporter and Localizer."
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
