@@ -28,7 +28,7 @@ final class Loading<T> extends ViewState<T> {
   T? get dataOrNull => data;
 
   @override
-  bool operator ==(Object other) => other is Loading<T> && other.data == data;
+  bool operator ==(Object other) => other is Loading && other.data == data;
 
   @override
   int get hashCode => Object.hash(Loading, data);
@@ -49,7 +49,7 @@ final class Done<T> extends ViewState<T> {
   T? get dataOrNull => data;
 
   @override
-  bool operator ==(Object other) => other is Done<T> && other.data == data;
+  bool operator ==(Object other) => other is Done && other.data == data;
 
   @override
   int get hashCode => Object.hash(Done, data);
@@ -78,7 +78,7 @@ final class Failed<T> extends ViewState<T> {
 
   @override
   bool operator ==(Object other) =>
-      other is Failed<T> && identical(other.error, error) && other.data == data;
+      other is Failed && identical(other.error, error) && other.data == data;
 
   @override
   int get hashCode => Object.hash(error, data);
