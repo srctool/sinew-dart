@@ -13,4 +13,8 @@ dependencies:
 
 dev_dependencies:
   lints: ^6.0.0
+  sinew_exception: ^0.1.0-dev.1   # the sample order list
+  sinew_models: ^0.1.0-dev.1
+  sinew_paging: ^0.1.0-dev.1
+  sinew_testing: ^0.1.0-dev.1
   test: ^1.26.0
