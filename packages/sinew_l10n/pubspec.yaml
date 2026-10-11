@@ -20,6 +20,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  sinew_models: ^0.1.0-dev.1   # test fixtures only: built-in exceptions and their local messages
   flutter_lints: ^6.0.0
 
 flutter:
