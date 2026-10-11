@@ -1,5 +1,5 @@
 name: sinew_models
-description: "Domain, Response, Entity, envelope bases, paging shapes, ViewState and Result."
+description: "Domain, Remote, Entity, envelope bases, paging shapes, ViewState and Result."
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
@@ -12,5 +12,8 @@ dependencies:
   meta: ^1.16.0
 
 dev_dependencies:
+  build_runner: ^2.16.1
+  json_annotation: ^4.12.0
+  json_serializable: ^6.14.1
   lints: ^6.0.0
   test: ^1.26.0

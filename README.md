@@ -8,7 +8,7 @@ The design and the full documentation live in the umbrella repository, [srctool/
 
 | Package | Kind | Holds |
 |---|---|---|
-| `sinew_models` | Dart | `Domain`, `Response`, `Entity`, envelope bases, paging shapes, `ViewState`, `Result` |
+| `sinew_models` | Dart | `Domain`, `Remote`, `Entity`, envelope bases, paging shapes, `ViewState`, `Result` |
 | `sinew_exception` | Dart | `SinewException` types, handlers, `processCall`, `CrashReporter`, `Localizer` |
 | `sinew_paging` | Dart | `Pager`, `PagingState`, `LoadType` |
 | `sinew_presentation` | Dart | `StateEffectHandler`, `EventActionHandler`, `EffectEmitter` |
