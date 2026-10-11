@@ -87,6 +87,24 @@ void main() {
       expect(const Failed<String>(error).error, same(error));
     });
 
+    test('equality ignores type arguments, so a const default equals an explicit state', () {
+      // `const Loading()` as a default parameter is a Loading<Never>; it must
+      // still equal a Loading<String> with the same data, both ways round.
+      const ViewState<String> byDefault =
+          Loading<Never>(); // what a const default produces
+      const explicit = Loading<String>();
+      expect(byDefault, explicit);
+      expect(explicit, byDefault);
+      expect(
+        const Result<num>.success(1) == const Result<int>.success(1),
+        isTrue,
+      );
+      expect(
+        const Result<int>.success(1) == const Result<num>.success(1),
+        isTrue,
+      );
+    });
+
     test('states compare by value', () {
       expect(const Done([1, 2]), const Done([1, 2]));
       expect(const Loading('a'), const Loading('a'));

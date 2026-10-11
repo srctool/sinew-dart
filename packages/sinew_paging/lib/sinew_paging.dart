@@ -1,4 +1,5 @@
-/// Pager, PagingState and LoadType: the paging rules in one place.
+/// Pager, PagingState, LoadType and the paging strategies.
 library;
 
-export 'src/api/paging.dart';
+export 'src/pager.dart';
+export 'src/paging_state.dart';
