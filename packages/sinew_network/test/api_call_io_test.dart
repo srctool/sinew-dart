@@ -21,7 +21,7 @@ void main() {
         error: cause,
       );
     });
-    return (result as Failure<Never>).error;
+    return (result as Failure<int?>).error;
   }
 
   test('a socket failure is NoInternetConnectionException', () async {
@@ -101,11 +101,17 @@ void main() {
       addTearDown(() => server.close(force: true));
 
       final dio = Dio();
-      final result = await processApiCall<Never>('ORD', 'GET', () async {
-        await dio.get<Object?>('https://127.0.0.1:${server.port}/a');
-        throw StateError('unreachable');
-      });
-      final error = (result as Failure<Never>).error;
+      // The call returns its status: had TLS let it through, the result would be a Success and the test would fail.
+      final result = await processCall<int?>(
+        'ORD',
+        'GET',
+        ExceptionLayer.repository,
+        apiHandlers('ORD', 'GET'),
+        () async =>
+            (await dio.get<Object?>('https://127.0.0.1:${server.port}/a'))
+                .statusCode,
+      );
+      final error = (result as Failure<int?>).error;
       expect(error, isA<UnexpectedException>(), reason: '${error.cause}');
     },
   );
