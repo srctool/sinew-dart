@@ -166,11 +166,15 @@ void main() {
       final (server, requests) = await serve('other');
       final dio = client(server);
       pinCertificateAuthorities(dio, [pinned]);
-      final result = await processApiCall<Never>('ORD', 'GET', () async {
-        await dio.get<Object?>('a');
-        throw StateError('unreachable');
-      });
-      expect((result as Failure<Never>).error, isA<UnexpectedException>());
+      // The call returns its status: had TLS let it through, the result would be a Success and the test would fail.
+      final result = await processCall<int?>(
+        'ORD',
+        'GET',
+        ExceptionLayer.repository,
+        apiHandlers('ORD', 'GET'),
+        () async => (await dio.get<Object?>('a')).statusCode,
+      );
+      expect((result as Failure<int?>).error, isA<UnexpectedException>());
       expect(requests, isEmpty); // no header, no token, no body left the device
     },
   );
