@@ -26,6 +26,36 @@ typedef RefreshCall = Future<RefreshResult> Function(String refreshToken);
 /// What the backend answered to a refresh.
 sealed class RefreshResult {
   const RefreshResult();
+
+  /// The answer a guarded refresh call means, so a [RefreshCall] is only the
+  /// HTTP call:
+  ///
+  /// ```dart
+  /// (token) async => RefreshResult.from(await processApiCall('AUTH', 'REFRESH', () => authApi.refresh(token)))
+  /// ```
+  ///
+  /// The backend refusing the token is [RefreshRejected]: a 401 or 403, a 400
+  /// or 422 (OAuth's `invalid_grant`), a readable refusal
+  /// ([ApiErrorException]) and any other 4xx. Everything else keeps the
+  /// session as [RefreshUnavailable]: offline, a timeout, a cancel, a 408 or
+  /// 429, a 5xx, and an unreadable answer, which is a bug, not a sign-out.
+  static RefreshResult from(Result<RefreshTokens> result) => switch (result) {
+    Success(:final data) => data,
+    Failure(:final error) when _isRefusal(error) => const RefreshRejected(),
+    Failure(:final error) => RefreshUnavailable(error),
+  };
+
+  static bool _isRefusal(SinewException error) => switch (error) {
+    UnauthorizedException() ||
+    ForbiddenException() ||
+    ValidationException() ||
+    ApiErrorException() ||
+    NotFoundException() ||
+    ConflictException() => true,
+    UndefinedErrorResponseException(:final status) =>
+      status >= 400 && status < 500 && status != 408,
+    _ => false,
+  };
 }
 
 /// A new pair. With rotating refresh tokens, [refresh] replaces the stored
