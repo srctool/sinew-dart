@@ -1,6 +1,7 @@
 /// SinewHttp (Dio), the auth layer, processApiCall, retry, polling and NetworkChecker.
 library;
 
+export 'src/api_call.dart';
 export 'src/auth_interceptor.dart';
 export 'src/config.dart';
 export 'src/error_body.dart';
