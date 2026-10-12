@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   sinew_exception: ^0.1.0-dev.1
+  sinew_models: ^0.1.0-dev.1
 
 dev_dependencies:
   flutter_test:
