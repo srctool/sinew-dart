@@ -18,6 +18,7 @@ dependencies:
 
 dev_dependencies:
   fake_async: ^1.3.3
+  sinew_testing: ^0.1.0-dev.1   # FakeTokenSource
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0

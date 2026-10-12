@@ -11,6 +11,10 @@ final class FakeAdapter implements HttpClientAdapter {
   Future<ResponseBody> Function(RequestOptions options) handler;
   final requests = <RequestOptions>[];
 
+  /// What each request carried when it was sent: a replay reuses the same
+  /// [RequestOptions], so [requests] alone would show only the last state.
+  final sent = <({Uri uri, Map<String, Object?> headers})>[];
+
   static Future<ResponseBody> _ok(RequestOptions _) async => json('{}');
 
   @override
@@ -20,6 +24,7 @@ final class FakeAdapter implements HttpClientAdapter {
     Future<void>? cancelFuture,
   ) {
     requests.add(options);
+    sent.add((uri: options.uri, headers: Map.of(options.headers)));
     return handler(options);
   }
 
