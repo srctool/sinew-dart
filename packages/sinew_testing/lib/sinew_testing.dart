@@ -2,3 +2,4 @@
 library;
 
 export 'src/controlled_fetch.dart';
+export 'src/fake_token_source.dart';

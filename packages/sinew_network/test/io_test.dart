@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sinew_network/sinew_network.dart';
+import 'package:sinew_testing/sinew_testing.dart';
 import 'package:sinew_network/src/http_status_error.dart';
 
 /// Against real servers through Dio's default adapter: the deadline, and the
@@ -69,6 +70,7 @@ void main() {
       locale: () => 'en',
       readTimeout: const Duration(milliseconds: 500),
     ),
+    FakeTokenSource(null),
   );
 
   Options auth() => Options(

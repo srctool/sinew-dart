@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sinew_network/sinew_network.dart';
+import 'package:sinew_testing/sinew_testing.dart';
 import 'package:sinew_network/src/http_status_error.dart';
 
 import 'support/fake_adapter.dart';
@@ -466,6 +467,7 @@ void main() {
           final adapter = FakeAdapter();
           await (SinewHttp.dio(
             config(baseUrl: base),
+            FakeTokenSource(null),
           )..httpClientAdapter = adapter).get<Object?>('orders/7');
           expect(
             adapter.requests.single.uri.toString(),
@@ -480,7 +482,8 @@ void main() {
       final adapter = FakeAdapter(
         (_) async => json('{"message":"No."}', status: 400),
       );
-      final dio = SinewHttp.dio(config())..httpClientAdapter = adapter;
+      final dio = SinewHttp.dio(config(), FakeTokenSource(null))
+        ..httpClientAdapter = adapter;
       final error = await dio
           .get<Object?>('a')
           .then<DioException?>(
@@ -502,10 +505,12 @@ void main() {
       final loud = <String>[];
       await (SinewHttp.dio(
         config(),
+        FakeTokenSource(null),
         logger: quiet.add,
       )..httpClientAdapter = FakeAdapter()).get<Object?>('a');
       await (SinewHttp.dio(
         config(logHttp: true),
+        FakeTokenSource(null),
         logger: loud.add,
       )..httpClientAdapter = FakeAdapter()).get<Object?>('a');
       expect(quiet, isEmpty);
@@ -516,6 +521,7 @@ void main() {
       String? sawLanguage;
       final dio = SinewHttp.dio(
         config(),
+        FakeTokenSource(null),
         extraInterceptors: [
           InterceptorsWrapper(
             onRequest: (o, h) {
