@@ -10,6 +10,7 @@ sinew_riverpod -> sinew_exception
 sinew_riverpod_providers -> sinew_riverpod
 sinew_riverpod_providers -> sinew_network
 sinew_riverpod_providers -> sinew_storage
+sinew_network -> sinew_models
 sinew_network -> sinew_exception
 sinew_storage -> sinew_exception
 sinew_storage -> sinew_security
