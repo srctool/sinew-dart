@@ -6,6 +6,7 @@ export 'src/auth_interceptor.dart';
 export 'src/config.dart';
 export 'src/error_body.dart';
 export 'src/interceptors.dart';
+export 'src/network_checker.dart' show NetworkChecker, NetworkStatus;
 export 'src/pinning.dart';
 export 'src/retry.dart' show poll, retryWithBackoff;
 export 'src/session_token_source.dart';

@@ -7,7 +7,7 @@ import 'package:sinew_exception/sinew_exception.dart';
 import 'package:sinew_models/sinew_models.dart';
 import 'package:sinew_paging/sinew_paging.dart';
 import 'package:sinew_presentation/sinew_presentation.dart';
-import 'package:sinew_testing/sinew_testing.dart';
+import 'package:sinew_testing/paging.dart';
 import 'package:test/test.dart';
 
 final class OrderListState {
