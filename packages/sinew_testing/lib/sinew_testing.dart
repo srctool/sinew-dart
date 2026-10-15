@@ -2,4 +2,5 @@
 library;
 
 export 'src/controlled_fetch.dart';
+export 'src/fake_network_checker.dart';
 export 'src/fake_token_source.dart';
