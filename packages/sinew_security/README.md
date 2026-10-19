@@ -14,3 +14,17 @@ platform takes a minute or two longer; later builds are cached. GitHub's hosted 
 
 The keys are kept with [`flutter_secure_storage`](https://pub.dev/packages/flutter_secure_storage); its platform setup
 applies (on macOS, the Keychain Sharing entitlement).
+
+## BiometricVault setup
+
+`BiometricVault` is a plugin with native Android and iOS code. Each app needs:
+
+- **Android:** `MainActivity` extends `FlutterFragmentActivity` (`BiometricPrompt` needs a `FragmentActivity`); without
+  it, `store` and `unlock` return `BiometricFailed(unavailable)` and log the fix. Exclude the vault's shared preferences
+  (`sinew.security.biometric.xml`) from cloud backup and device transfer in `data_extraction_rules.xml`; the key can't
+  leave the device anyway.
+- **iOS:** `NSFaceIDUsageDescription` in `Info.plist`.
+- **macOS:** the Keychain Sharing entitlement, for `FieldCipher`'s keys. The vault is unavailable on desktop and web.
+
+On Android, `store` shows the prompt (the key needs a match to encrypt too); iOS stores without one. A secret is
+released only by a real match: no prompt sits in front of a normal read.
