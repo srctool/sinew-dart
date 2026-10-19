@@ -1,4 +1,4 @@
 /// FieldCipher and BiometricVault on vetted crypto per platform.
 library;
 
-export 'src/api/security.dart';
+export 'src/field_cipher.dart' show DecryptionFailed, FieldCipher;
