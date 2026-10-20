@@ -15,10 +15,14 @@ dependencies:
   sinew_exception: ^0.1.0-dev.1
   sinew_security: ^0.1.0-dev.1
   shared_preferences: ^2.5.6
+  meta: ^1.19.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_secure_storage: ^11.2.0
+  flutter_secure_storage_platform_interface: ^2.1.1
+  flutter_secure_storage_web: ^2.1.1
   shared_preferences_platform_interface: ^2.4.2
   shared_preferences_web: ^2.4.3
