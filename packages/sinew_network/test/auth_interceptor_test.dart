@@ -44,6 +44,7 @@ final class AuthBackend {
     }
     if (uri.path == '/v1/auth/login') return json('{}', status: 401);
     if (authorized && uri.path == failReplaysOf) return json('{}', status: 500);
+    if (authorized && uri.path == '/v1/json') return json('{"replayed":true}');
     if (authorized) return text(auth!);
     return json('{}', status: 401);
   }
@@ -86,6 +87,17 @@ const offline = NoInternetConnectionException(
 );
 
 void main() {
+  test('a replay keeps the caller\'s response type', () async {
+    // The replayed response is JSON, read as text: Dio's fetch<T> would decode
+    // it as JSON for any T but dynamic, and the caller's String cast would fail.
+    final backend = AuthBackend(serverToken: 'token-2');
+    expect(await backend.get('json'), '{"replayed":true}');
+    expect(backend.sentTokens('/v1/json'), [
+      'Bearer token-1',
+      'Bearer token-2',
+    ]);
+  });
+
   test('a valid token is attached', () async {
     expect(await AuthBackend().get('orders'), 'Bearer token-1');
   });
