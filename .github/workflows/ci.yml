@@ -65,16 +65,18 @@ jobs:
         working-directory: example/android
         run: ./gradlew :sinew_security:testDebugUnitTest
       - uses: reactivecircus/android-emulator-runner@v2
+        # A hung emulator fails here instead of using up the job.
+        timeout-minutes: 35
         with:
           api-level: 35
           arch: x86_64
           target: google_apis
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot
-          # A run that fails is retried once (see the docs: Testing and CI): the emulator can drop offline for a
-          # moment, and the first app then fails to start.
+          # One app with every test (integration_test/all_test.dart): each install is a chance for a runner
+          # emulator to hang. A run that fails is retried once (see the docs: Testing and CI).
           script: |
-            cd example && (flutter test integration_test -d emulator-5554 || flutter test integration_test -d emulator-5554)
+            cd example && (flutter test integration_test/all_test.dart -d emulator-5554 || flutter test integration_test/all_test.dart -d emulator-5554)
             "$GITHUB_WORKSPACE/tool/secure_store_reinstall_test.sh" emulator-5554
 
   ios:
@@ -104,7 +106,7 @@ jobs:
           echo "SIMULATOR=$udid" >> "$GITHUB_ENV"
       - name: Integration tests
         working-directory: example
-        run: flutter test integration_test -d "$SIMULATOR"
+        run: flutter test integration_test/all_test.dart -d "$SIMULATOR"
       - name: A reinstall starts with an empty SecureStore
         run: tool/secure_store_reinstall_test.sh "$SIMULATOR"
       - name: BiometricVault with simulated Face ID
