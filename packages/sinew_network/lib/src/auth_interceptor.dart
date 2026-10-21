@@ -200,7 +200,9 @@ final class SinewAuthInterceptor extends Interceptor {
         _attach(options, token);
         try {
           // The replay already ran through every interceptor: hand its result straight to the caller.
-          handler.resolve(await dio.fetch<Object?>(options));
+          // `dynamic` keeps the request's own response type: Dio's fetch<T>
+          // rewrites it from any other T, decoding a plain-text body as JSON.
+          handler.resolve(await dio.fetch<dynamic>(options));
         } on DioException catch (e) {
           handler.reject(e);
         }
