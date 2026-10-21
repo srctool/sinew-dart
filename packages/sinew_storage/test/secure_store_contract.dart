@@ -123,4 +123,17 @@ void secureStoreContract() {
       expect(await store.read('key$i'), 'value $i');
     }
   });
+
+  test('it can be inspected', () async {
+    final store = await SecureStore.create(namespace: 'contract');
+    await store.write('b', '2');
+    await store.write('a', '1');
+    expect(store.name, 'contract');
+    expect(await store.keys(), ['a', 'b']);
+    expect(await store.read('a'), '1');
+    expect(
+      await (await SecureStore.create(namespace: 'contract_other')).keys(),
+      isEmpty,
+    );
+  });
 }

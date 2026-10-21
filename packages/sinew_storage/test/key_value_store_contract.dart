@@ -106,4 +106,21 @@ void keyValueStoreContract() {
       expect(await store.getInt('key$i'), i);
     }
   });
+
+  test('it can be inspected', () async {
+    expect(store.name, 'sinew_contract');
+    expect(await store.keys(), isEmpty);
+    await store.setString('theme', 'dark');
+    await store.setInt('launches', 3);
+    await store.setBool('onboarded', true);
+    await store.setDouble('ratio', 1.5);
+    await other.setString('elsewhere', 'x');
+    expect(await store.keys(), ['launches', 'onboarded', 'ratio', 'theme']);
+    expect(await store.read('theme'), 'dark');
+    expect(await store.read('launches'), '3');
+    expect(await store.read('onboarded'), 'true');
+    expect(await store.read('ratio'), '1.5');
+    expect(await store.read('missing'), isNull);
+    expect(await other.keys(), ['elsewhere']);
+  });
 }

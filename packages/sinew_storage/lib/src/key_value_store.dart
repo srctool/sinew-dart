@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'inspectable_store.dart';
+
 /// Non-sensitive preferences and flags: onboarding seen, the theme, the last
 /// filter. Never tokens or personal data, which go in `SecureStore` or the
 /// app's database with `FieldCipher`.
@@ -15,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Android, `NSUserDefaults` on iOS and macOS, a JSON file on Linux and
 /// Windows, `localStorage` on the web. On the web a whole-number double also
 /// reads as an int, since JavaScript doesn't tell them apart.
-abstract interface class KeyValueStore {
+abstract interface class KeyValueStore implements InspectableStore {
   /// The store named [name]. Stores with the same name share their values.
   /// The name prefixes every key, so it must not be blank or contain a `.`.
   static KeyValueStore create({String name = 'sinew_prefs'}) {
@@ -54,6 +56,18 @@ abstract interface class KeyValueStore {
 
   /// Removes every key of this store, and nothing of another store.
   Future<void> clear();
+
+  /// The store's name, the prefix of its keys.
+  @override
+  String get name;
+
+  /// Every key of this store, without its prefix, sorted.
+  @override
+  Future<List<String>> keys();
+
+  /// [key]'s value as text (`3`, `true`, `1.5`), whatever its type, or `null`.
+  @override
+  Future<String?> read(String key);
 }
 
 /// [KeyValueStore] over [SharedPreferencesAsync]. Each read fetches the one
@@ -65,7 +79,7 @@ final class _PrefsKeyValueStore implements KeyValueStore {
 
   final SharedPreferencesAsync _prefs;
 
-  /// The store's name, the prefix of its keys.
+  @override
   final String name;
 
   final String _prefix;
@@ -106,6 +120,16 @@ final class _PrefsKeyValueStore implements KeyValueStore {
 
   @override
   Future<void> remove(String key) => _prefs.remove('$_prefix$key');
+
+  @override
+  Future<List<String>> keys() async => [
+    for (final key in await _prefs.getKeys())
+      if (key.startsWith(_prefix)) key.substring(_prefix.length),
+  ]..sort();
+
+  @override
+  Future<String?> read(String key) async =>
+      (await _get<Object>(key))?.toString();
 
   @override
   Future<void> clear() async {

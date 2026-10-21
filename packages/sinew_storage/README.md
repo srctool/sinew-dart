@@ -58,3 +58,20 @@ Future<Result<String?>> refreshToken() =>
 | anything else (a bug) | `UnexpectedException`, reported |
 
 `storageHandlers` is public: add rows for your database package's own errors and guard with `processCall`.
+
+## Paging a local query
+
+`pagedQuery` gives a local table the same `PagingEntity` a remote list returns, for `Pager.offset`. It asks your
+`LIMIT/OFFSET` query for one row more than the page, so it knows whether a next page exists without a `COUNT(*)`:
+
+```dart
+Future<PagingEntity<OrderRow>> page(int page, int limit) => pagedQuery(page, limit, (offset, count) =>
+    (db.select(db.orders)..orderBy([(o) => OrderingTerm.desc(o.placedAt)])..limit(count, offset: offset)).get());
+```
+
+`total` and `totalPage` stay 0. 0-based pages pass `firstPage: 0`.
+
+## InspectableStore
+
+`KeyValueStore` and `SecureStore` are `InspectableStore`s (`name`, sorted `keys()`, `read(key)` as text), which the
+devtools browse; implement it on a DAO to show up there too.

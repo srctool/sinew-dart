@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:sinew_security/sinew_security.dart';
 
+import 'inspectable_store.dart';
 import 'key_value_store.dart';
 
 /// Small secrets: the refresh token, a data key, a device id. Never large data
@@ -21,7 +22,7 @@ import 'key_value_store.dart';
 /// - **A reinstall starts empty** on every platform: the values go with the
 ///   app, even where the key survives (the iOS Keychain).
 /// - Writes are serialized, so the last one wins.
-abstract interface class SecureStore {
+abstract interface class SecureStore implements InspectableStore {
   /// The store for [namespace], which must not be blank or contain a `.`.
   static Future<SecureStore> create({String namespace = 'sinew'}) async {
     _checkNamespace(namespace);
@@ -32,7 +33,17 @@ abstract interface class SecureStore {
     );
   }
 
-  /// The secret for [key], or `null` when absent or undecryptable.
+  /// The namespace.
+  @override
+  String get name;
+
+  /// Every key holding a secret, sorted.
+  @override
+  Future<List<String>> keys();
+
+  /// The secret for [key], or `null` when absent or undecryptable. The
+  /// devtools show it masked.
+  @override
   Future<String?> read(String key);
 
   /// Stores [value] under [key], replacing any secret there.
@@ -84,6 +95,12 @@ final class EncryptedSecureStore implements SecureStore {
   }
 
   String _context(String key) => '$namespace:$key';
+
+  @override
+  String get name => namespace;
+
+  @override
+  Future<List<String>> keys() => values.keys();
 
   @override
   Future<String?> read(String key) async {
