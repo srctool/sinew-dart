@@ -39,3 +39,22 @@ Setup: `sinew_security`'s (CMake to build; on macOS, the Keychain Sharing entitl
 `data_extraction_rules.xml`: a restored value can't be decrypted on a new device anyway.
 
 In unit tests, use `InMemorySharedPreferencesAsync` and `FlutterSecureStorage.setMockInitialValues({})`.
+
+## The storage guard
+
+Guard every store or database call in a repository, as `processApiCall` guards HTTP:
+
+```dart
+Future<Result<String?>> refreshToken() =>
+    processStorageCall('AUTH', 'READ_TOKEN', StorageAccess.read, () => secrets.read('refreshToken'));
+```
+
+| Failure | Becomes |
+|---|---|
+| `DecryptionFailed`, a `FormatException` decoding stored data, a plugin's failed decryption (`BadPaddingException`) | `LocalStorageCorruptionException` |
+| out of space (`ENOSPC`, "database or disk is full", `QuotaExceededError`) | `StorageFullException` |
+| any other `PlatformException`, `IOException`, `SqliteException` or browser storage error | `StorageReadException` / `StorageWriteException` |
+| an envelope with no payload | `ParseException`, reported |
+| anything else (a bug) | `UnexpectedException`, reported |
+
+`storageHandlers` is public: add rows for your database package's own errors and guard with `processCall`.

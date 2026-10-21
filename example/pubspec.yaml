@@ -17,6 +17,8 @@ dependencies:
   sinew_l10n: ^0.1.0-dev.1
   sinew_security: ^0.1.0-dev.1
   sinew_storage: ^0.1.0-dev.1
+  sinew_exception: ^0.1.0-dev.1
+  sinew_models: ^0.1.0-dev.1
 
 dev_dependencies:
   flutter_test:
