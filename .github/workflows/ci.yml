@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [ main ]
 
+# The jobs only read the repository.
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -29,3 +33,84 @@ jobs:
         run: |
           melos run l10n
           git diff --exit-code -- packages/sinew_l10n/lib/src/generated
+
+  android:
+    name: Android integration tests (emulator)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    # The example app's integration tests on a real Android runtime: KeyValueStore, SecureStore, the storage guard,
+    # the network checker, and the BiometricVault plugin's registration. The biometric flows skip themselves here:
+    # they need a PIN, an enrolled finger and touches, run by tool/biometric_vault_device_test.sh. The reinstall check
+    # (tool/secure_store_reinstall_test.sh) runs in the ios job, where the Keychain outlives the app: on the runner's
+    # emulator, a second flutter test session hangs at app start.
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - run: flutter pub get
+      - name: Build the example before the emulator starts (BoringSSL for webcrypto included)
+        working-directory: example
+        run: flutter build apk --debug
+      - name: The plugin's Android unit tests
+        working-directory: example/android
+        run: ./gradlew :sinew_security:testDebugUnitTest
+      - uses: reactivecircus/android-emulator-runner@v2
+        # A hung emulator fails here instead of using up the job.
+        timeout-minutes: 35
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot
+          # One app with every test (integration_test/all_test.dart): each install is a chance for a runner
+          # emulator to hang. A run that fails is retried once (see the docs: Testing and CI).
+          script: |
+            cd example && (flutter test integration_test/all_test.dart -d emulator-5554 || flutter test integration_test/all_test.dart -d emulator-5554)
+
+  ios:
+    name: iOS integration tests (simulator)
+    # macos-26 for Xcode 26: connectivity_plus uses iOS 26's NWPath.isUltraConstrained.
+    runs-on: macos-26
+    timeout-minutes: 75
+    # The same integration tests on an iOS simulator, plus the BiometricVault flows (Face ID enrolled and matched
+    # through notifyutil; the simulator doesn't enforce the item's access control) and an iOS device build of the
+    # example without signing.
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Boot an iPhone simulator
+        run: |
+          udid="$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          print(next(d["udid"] for runtime, ds in sorted(devices.items(), reverse=True) if "iOS" in runtime
+                     for d in ds if d["name"].startswith("iPhone")))')"
+          xcrun simctl boot "$udid" || true   # bootstatus -b waits for it either way
+          xcrun simctl bootstatus "$udid" -b
+          echo "SIMULATOR=$udid" >> "$GITHUB_ENV"
+      - name: Integration tests
+        working-directory: example
+        run: flutter test integration_test/all_test.dart -d "$SIMULATOR"
+      - name: A reinstall starts with an empty SecureStore
+        run: tool/secure_store_reinstall_test.sh "$SIMULATOR"
+      - name: BiometricVault with simulated Face ID
+        run: tool/biometric_vault_device_test.sh "$SIMULATOR"
+      - name: iOS device build, unsigned
+        working-directory: example
+        run: flutter build ios --debug --no-codesign
