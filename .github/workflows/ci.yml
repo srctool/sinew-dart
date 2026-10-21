@@ -71,13 +71,16 @@ jobs:
           target: google_apis
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot
+          # A run that fails is retried once (see the docs: Testing and CI): the emulator can drop offline for a
+          # moment, and the first app then fails to start.
           script: |
-            cd example && flutter test integration_test -d emulator-5554
-            tool/secure_store_reinstall_test.sh emulator-5554
+            cd example && (flutter test integration_test -d emulator-5554 || flutter test integration_test -d emulator-5554)
+            "$GITHUB_WORKSPACE/tool/secure_store_reinstall_test.sh" emulator-5554
 
   ios:
     name: iOS integration tests (simulator)
-    runs-on: macos-15
+    # macos-26 for Xcode 26: connectivity_plus uses iOS 26's NWPath.isUltraConstrained.
+    runs-on: macos-26
     timeout-minutes: 75
     # The same integration tests on an iOS simulator, plus the BiometricVault flows (Face ID enrolled and matched
     # through notifyutil; the simulator doesn't enforce the item's access control) and an iOS device build of the
