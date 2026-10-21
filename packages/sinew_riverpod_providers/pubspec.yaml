@@ -1,5 +1,5 @@
 name: sinew_riverpod_providers
-description: "Ready Riverpod providers for Sinew's network, storage and security services."
+description: "Ready Riverpod providers for Sinew's network and storage services, and useNetworkChecker."
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
@@ -15,8 +15,15 @@ dependencies:
   sinew_riverpod: ^0.1.0-dev.1
   sinew_network: ^0.1.0-dev.1
   sinew_storage: ^0.1.0-dev.1
+  dio: ^5.11.1
+  flutter_hooks: ^0.21.3
+  riverpod: ^3.4.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  sinew_testing: ^0.1.0-dev.1
+  connectivity_plus_platform_interface: ^2.1.0
+  flutter_secure_storage: ^11.2.0
+  shared_preferences_platform_interface: ^2.4.2
