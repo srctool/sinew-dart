@@ -18,6 +18,9 @@ dependencies:
   sinew_network: ^0.1.0-dev.1
   sinew_storage: ^0.1.0-dev.1
   sinew_security: ^0.1.0-dev.1
+  dio: ^5.11.1
+  test_api: ^0.7.0
+  web: ^1.1.0
 
 dev_dependencies:
   flutter_test:

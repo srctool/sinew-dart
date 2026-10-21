@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:sinew_models/sinew_models.dart';
+import 'package:test_api/scaffolding.dart';
 
 /// One call to a [ControlledFetch]: the page, cursor or last ID it asked for,
 /// and its query.
@@ -27,11 +28,11 @@ final class FetchCall<T> {
 /// [complete], [succeed] or [fail], by its index in call order. Dart futures
 /// can't be cancelled from outside, so a superseded call stays pending until
 /// the test answers it, which is also how a test proves a late answer is
-/// dropped. Register `addTearDown(fetch.assertAllCompleted)` so a call left
+/// dropped. Create it with [controlledFetch] inside a test, so a call left
 /// pending fails the test.
 ///
 /// ```dart
-/// final fetch = ControlledFetch<Order>();
+/// final fetch = controlledFetch<Order>();
 /// final pager = Pager<Order>.offset(fetch.call);
 /// ```
 final class ControlledFetch<T> {
@@ -80,4 +81,13 @@ final class ControlledFetch<T> {
       throw StateError('Calls $pending were never answered');
     }
   }
+}
+
+/// A [ControlledFetch] whose [ControlledFetch.assertAllCompleted] runs when
+/// the test ends, so a race left unanswered fails the test instead of passing
+/// silently. Call it inside a test or a `setUp`.
+ControlledFetch<T> controlledFetch<T>() {
+  final fetch = ControlledFetch<T>();
+  addTearDown(fetch.assertAllCompleted);
+  return fetch;
 }
