@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [ main ]
 
+# The jobs only read the repository.
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
