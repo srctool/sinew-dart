@@ -38,10 +38,11 @@ jobs:
     name: Android integration tests (emulator)
     runs-on: ubuntu-24.04
     timeout-minutes: 60
-    # The example app's integration tests on a real Android runtime: KeyValueStore, SecureStore (and a reinstall
-    # starting empty), the storage guard, the network checker, and the BiometricVault plugin's registration. The
-    # biometric flows skip themselves here: they need a PIN, an enrolled finger and touches, run by
-    # tool/biometric_vault_device_test.sh.
+    # The example app's integration tests on a real Android runtime: KeyValueStore, SecureStore, the storage guard,
+    # the network checker, and the BiometricVault plugin's registration. The biometric flows skip themselves here:
+    # they need a PIN, an enrolled finger and touches, run by tool/biometric_vault_device_test.sh. The reinstall check
+    # (tool/secure_store_reinstall_test.sh) runs in the ios job, where the Keychain outlives the app: on the runner's
+    # emulator, a second flutter test session hangs at app start.
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
@@ -77,7 +78,6 @@ jobs:
           # emulator to hang. A run that fails is retried once (see the docs: Testing and CI).
           script: |
             cd example && (flutter test integration_test/all_test.dart -d emulator-5554 || flutter test integration_test/all_test.dart -d emulator-5554)
-            "$GITHUB_WORKSPACE/tool/secure_store_reinstall_test.sh" emulator-5554
 
   ios:
     name: iOS integration tests (simulator)
