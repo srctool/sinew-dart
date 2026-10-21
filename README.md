@@ -16,13 +16,19 @@ The design and the full documentation live in the umbrella repository, [srctool/
 | `sinew_riverpod` | Flutter | notifier mixins, hooks, `AsyncValue` conversions |
 | `sinew_riverpod_providers` | Flutter | ready providers for network, storage and security |
 | `sinew_network` | Flutter | `SinewHttp` (Dio), the auth layer, `processApiCall`, retry, polling |
-| `sinew_security` | Flutter | `FieldCipher`, `BiometricVault` (becomes a plugin with native code at S4) |
+| `sinew_security` | Flutter | `FieldCipher`, `BiometricVault` (a plugin with native Android and iOS code) |
 | `sinew_storage` | Flutter | `SecureStore`, `KeyValueStore`, `processStorageCall`, `pagedQuery` |
 | `sinew_testing` | Flutter | fakes and test helpers (dev dependency only) |
 | `sinew_camouflage` | Flutter | `PagingState.toCamo()` for Camouflage's `CamoPagedList` |
 | `sinew_devtools`, `sinew_devtools_ui` | Flutter | developer tools, compiled out of production builds |
 
-Status: milestone **S0** (skeleton). Each package holds a placeholder until its milestone; third-party dependencies (Dio, Riverpod, secure storage…) are added in each package's milestone.
+**Status: pre-1.0, not published yet.** The API may change before 1.0.
+
+- **Implemented:** `sinew_models`, `sinew_exception`, `sinew_l10n`, `sinew_paging`, `sinew_presentation`, `sinew_riverpod`, `sinew_riverpod_providers`, `sinew_network`, `sinew_security`, `sinew_storage`, `sinew_testing`.
+- **In progress:** `sinew_camouflage` and the example list screen.
+- **Planned for 1.1:** `sinew_devtools`, `sinew_devtools_ui` (placeholders for now).
+
+See the [roadmap](https://sinew-dev.srctool.com/guide/project/roadmap).
 
 ## Work in the workspace
 
