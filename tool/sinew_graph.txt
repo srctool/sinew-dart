@@ -15,6 +15,7 @@ sinew_network -> sinew_exception
 sinew_storage -> sinew_models
 sinew_storage -> sinew_exception
 sinew_storage -> sinew_security
+sinew_camouflage -> sinew_models
 sinew_camouflage -> sinew_paging
 sinew_camouflage -> sinew_exception
 sinew_camouflage -> sinew_l10n
