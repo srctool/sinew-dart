@@ -104,8 +104,12 @@ Future<void> runOrderListFlow(WidgetTester tester) async {
   expect(find.text('Order #6'), findsOneWidget);
   expect(find.text('Retry'), findsNothing);
 
-  // Pull to refresh goes back to the first page, with the skeleton.
+  // Pull to refresh goes back to the first page, with the skeleton. A bouncing
+  // list releases the pull when it has sprung back, which takes a moment.
   await tester.drag(find.byType(CamoPagedList<Order>), const Offset(0, 400));
+  for (var i = 0; i < 60 && backend.calls.length == 3; i++) {
+    await tester.pump(const Duration(milliseconds: 50));
+  }
   await settle();
   expect(backend.calls, [1, 2, 2, 1]);
   expect(find.text('Order #1'), findsNothing);
