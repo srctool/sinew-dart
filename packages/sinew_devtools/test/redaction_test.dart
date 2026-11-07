@@ -216,6 +216,31 @@ void main() {
     expect(masked(big, 'application/json'), isTrue);
   });
 
+  test('free text hides credentials, pairs and JSON values', () {
+    expect(
+      redaction.redactText(
+        'Authorization: Bearer abc.def-1, then basic dXNlcjpw',
+      ),
+      'Authorization: Bearer $mask, then basic $mask',
+    );
+    expect(
+      redaction.redactText(
+        'GET https://api.test/me?token=abc&page=2 failed; password=hunter2',
+      ),
+      'GET https://api.test/me?token=$mask&page=2 failed; password=$mask',
+    );
+    expect(
+      redaction.redactText(
+        r'body {"name":"ana","otp": 445566,"pin":true,"refresh_token":"r\"1"}',
+      ),
+      'body {"name":"ana","otp": "$mask","pin":"$mask","refresh_token":"$mask"}',
+    );
+    expect(
+      redaction.redactText('nothing to hide: status=500'),
+      'nothing to hide: status=500',
+    );
+  });
+
   group('query parameters and form bodies', () {
     test('query parameters are redacted', () {
       expect(

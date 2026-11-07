@@ -112,6 +112,35 @@ final class Redaction {
           key: isSensitiveHeader(key) ? [for (final _ in value) mask] : value,
       };
 
+  /// Free text, such as an exception message or a stack trace, with the
+  /// secrets it can recognize masked: a `Bearer` or `Basic` credential,
+  /// `name=value` pairs (query strings, forms, log lines) and JSON
+  /// `"name": value` pairs whose names are sensitive. Anything else is kept,
+  /// so prefer the structured redactions where there are any.
+  String redactText(String text) => text
+      .replaceAllMapped(_credential, (m) => '${m[1]} $mask')
+      .replaceAllMapped(
+        _jsonPair,
+        (m) => isSensitive(m[2]!) ? '${m[1]}"$mask"' : m[0]!,
+      )
+      .replaceAllMapped(
+        _keyValue,
+        (m) => isSensitive(m[1]!) ? '${m[1]}=$mask' : m[0]!,
+      );
+
+  static final _credential = RegExp(
+    r'\b(bearer|basic)\s+[A-Za-z0-9._~+/=\-]+',
+    caseSensitive: false,
+  );
+
+  /// `"name": value`: group 1 is everything before the value, group 2 the
+  /// name.
+  static final _jsonPair = RegExp(
+    r'("([^"\\]+)"\s*:\s*)("(?:[^"\\]|\\.)*"|-?\d+(?:\.\d+)?|true|false)',
+  );
+
+  static final _keyValue = RegExp(r'''([A-Za-z0-9_.\-]+)=([^&\s,;"'<>)\]]+)''');
+
   /// [url] with the value of every sensitive query parameter masked, and of
   /// every sensitive fragment parameter (an OAuth redirect's
   /// `#access_token=…`). The rest is unchanged.

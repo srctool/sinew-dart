@@ -20,6 +20,8 @@ sinew_camouflage -> sinew_paging
 sinew_camouflage -> sinew_exception
 sinew_camouflage -> sinew_l10n
 sinew_devtools -> sinew_network
+sinew_devtools -> sinew_exception
+sinew_devtools -> sinew_models
 sinew_devtools -> sinew_storage
 sinew_devtools_ui -> sinew_devtools
 sinew_devtools_ui -> sinew_l10n
