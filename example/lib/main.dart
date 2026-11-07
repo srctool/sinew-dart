@@ -1,7 +1,14 @@
+import 'package:camouflage_core/camouflage_core.dart';
+import 'package:camouflage_skin_minimal/camouflage_skin_minimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sinew_l10n/sinew_l10n.dart';
 
-/// The Sinew example app. Until milestone S5 it shows a placeholder; then it becomes the list screen through CamoPagedList.
-void main() => runApp(const SinewExampleApp());
+import 'orders/order_list_screen.dart';
+
+/// The Sinew example: one list screen, through `Pager` → `PagingState` →
+/// `toCamo` → `CamoPagedList`.
+void main() => runApp(const ProviderScope(child: SinewExampleApp()));
 
 /// The example's root widget.
 class SinewExampleApp extends StatelessWidget {
@@ -9,7 +16,17 @@ class SinewExampleApp extends StatelessWidget {
   const SinewExampleApp({super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialApp(
-        home: Scaffold(body: Center(child: Text('Sinew example (S0)'))),
-      );
+  Widget build(BuildContext context) => MaterialApp(
+    title: 'Sinew',
+    localizationsDelegates: SinewLocalizations.localizationsDelegates,
+    supportedLocales: SinewLocalizations.supportedLocales,
+    builder: (context, child) => CamouflageProvider(
+      skin: minimalSkin,
+      theme: MediaQuery.platformBrightnessOf(context) == Brightness.dark
+          ? minimalDark
+          : minimalLight,
+      child: child!,
+    ),
+    home: const Scaffold(body: OrderListScreen()),
+  );
 }

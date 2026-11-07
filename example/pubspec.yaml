@@ -1,5 +1,5 @@
 name: sinew_example
-description: "A new Flutter project."
+description: "The Sinew example: a list screen through Pager, PagingState, toCamo and CamoPagedList."
 publish_to: 'none'
 version: 0.1.0
 resolution: workspace
@@ -10,7 +10,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  camouflage_core: ^0.1.0-dev.1   # from source: see dependency_overrides in the workspace's pubspec.yaml
+  camouflage_skin_minimal:
+    git:
+      url: https://github.com/srctool/camouflage-dart.git
+      path: packages/camouflage_skin_minimal
+      ref: 97b0d6da2e090161398308c4de6e7e2dc5b21128
+  flutter_riverpod: ^3.4.3
   sinew_paging: ^0.1.0-dev.1
+  sinew_riverpod: ^0.1.0-dev.1
   sinew_presentation: ^0.1.0-dev.1
   sinew_network: ^0.1.0-dev.1
   sinew_camouflage: ^0.1.0-dev.1
