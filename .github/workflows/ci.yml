@@ -34,6 +34,52 @@ jobs:
           melos run l10n
           git diff --exit-code -- packages/sinew_l10n/lib/src/generated
 
+  platforms:
+    name: List screen on ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    # The example's list screen on the platforms the emulator and simulator jobs don't cover.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: Linux, os: ubuntu-24.04, device: linux }
+          - { name: Windows, os: windows-2025, device: windows }
+          - { name: macOS, os: macos-26, device: macos }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Linux desktop build tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build libgtk-3-dev libsecret-1-dev xvfb
+      - run: flutter pub get
+      - name: Integration test
+        if: runner.os != 'Linux'
+        working-directory: example
+        run: flutter test integration_test/order_list_test.dart -d ${{ matrix.device }}
+      - name: Integration test, on a virtual display
+        if: runner.os == 'Linux'
+        working-directory: example
+        run: xvfb-run -a flutter test integration_test/order_list_test.dart -d linux
+
+  web:
+    name: List screen on web
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: The list screen's tests in Chrome
+        working-directory: example
+        run: flutter test --platform chrome test/order_list_test.dart
+
   android:
     name: Android integration tests (emulator)
     runs-on: ubuntu-24.04
