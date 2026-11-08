@@ -30,6 +30,7 @@ MockHttp mockHttp(
   void Function(MockRoutes routes) routes, {
   SinewConfig? config,
   TokenSource? tokenSource,
+  SinewHttpHooks hooks = SinewHttpHooks.none,
 }) {
   final table = MockRoutes._();
   routes(table);
@@ -38,6 +39,7 @@ MockHttp mockHttp(
     config ??
         SinewConfig(baseUrl: 'https://test.local/v1/', locale: () => 'en'),
     tokenSource ?? FakeTokenSource(),
+    hooks: hooks,
   )..httpClientAdapter = adapter;
   return MockHttp._(dio, adapter._requests);
 }

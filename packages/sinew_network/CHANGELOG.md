@@ -1,3 +1,7 @@
+## Unreleased
+
+- `SinewHttpHooks`, `FaultDecision`, `HttpExchange`, `SinewRecorderInterceptor` (before auth) and `SinewHooksInterceptor` (after auth: faults, the host override, `debugExpireToken`). `SinewHttp.dio(…, hooks:)` and `SinewHttp.debugExpireToken(dio)`.
+
 ## 0.1.0-dev.1
 
 - S5 fix: a request replayed after a token refresh keeps its response type. The auth interceptor replayed with `dio.fetch<Object?>`, and Dio's `fetch<T>` rewrites the response type from any `T` but `dynamic`, so a plain-text or `String` request got its JSON body decoded into a `Map` after a refresh, failing the caller's cast.

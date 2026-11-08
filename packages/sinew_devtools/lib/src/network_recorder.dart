@@ -20,6 +20,7 @@ final class NetworkExchange {
     required this.startedAt,
     this.requestHeaders = const {},
     this.requestBody,
+    this.requestBodyStreamed = false,
     this.status,
     this.responseHeaders = const {},
     this.responseBody,
@@ -43,6 +44,10 @@ final class NetworkExchange {
 
   /// The request body, before redaction.
   final List<int>? requestBody;
+
+  /// Whether the request body was streamed: it's recorded as binary of
+  /// unknown size, and can't be replayed.
+  final bool requestBodyStreamed;
 
   /// The response status, or `null` when the request failed before one.
   final int? status;
@@ -273,10 +278,10 @@ final class NetworkRecorder {
   /// Redacts [exchange] and stores the result.
   NetworkRecord record(NetworkExchange exchange) {
     final rules = redaction.withHeaders(exchange.clientHeaders);
-    final requestBody = rules.redactBody(
-      exchange.requestBody,
-      _contentType(exchange.requestHeaders),
-    );
+    final type = _contentType(exchange.requestHeaders);
+    final requestBody = exchange.requestBodyStreamed
+        ? BinaryBody(type?.split(';').first.trim(), unknownSize)
+        : rules.redactBody(exchange.requestBody, type);
     final url = rules.redactUrl(exchange.url);
     final readded = {
       for (final name in exchange.clientHeaders) name.toLowerCase(),
@@ -368,8 +373,13 @@ final class NetworkRecorder {
   }
 }
 
-/// A size as the pages show it: `512 B`, `12 KB`, `1.2 MB`.
+/// The size of a streamed body, which isn't read.
+const unknownSize = -1;
+
+/// A size as the pages show it: `512 B`, `12 KB`, `1.2 MB`, or
+/// `unknown size` for a streamed body.
 String formatSize(int bytes) {
+  if (bytes < 0) return 'unknown size';
   if (bytes < 1024) return '$bytes B';
   if (bytes < 1024 * 1024) return '${(bytes + 512) ~/ 1024} KB';
   final tenths = (bytes * 10 + 512 * 1024) ~/ (1024 * 1024);

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import 'auth_interceptor.dart';
 import 'config.dart';
+import 'hooks.dart';
 import 'interceptors.dart';
 import 'token_source.dart';
 
@@ -22,10 +23,16 @@ abstract final class SinewHttp {
   /// `baseUrl`'s host, outside `config.anonymousPaths`, and refreshes once for
   /// any number of concurrent 401s. [extraInterceptors] run after Sinew's and
   /// before the log.
+  ///
+  /// [hooks] are devtools' (`DevTools.httpHooks`), passed from `main` behind
+  /// `DevToolsGate.enabled`: a recorder before the auth interceptor, and
+  /// faults and the host override after it, so a forced 401 runs the real
+  /// refresh. [SinewHttpHooks.none], the default, leaves every request alone.
   static Dio dio(
     SinewConfig config,
     TokenSource tokenSource, {
     HttpLogger logger = defaultHttpLogger,
+    SinewHttpHooks hooks = SinewHttpHooks.none,
     List<Interceptor> extraInterceptors = const [],
   }) {
     final dio = Dio(
@@ -46,15 +53,22 @@ abstract final class SinewHttp {
         locale: config.locale,
         defaults: config.defaultHeaders,
       ),
+      SinewRecorderInterceptor(
+        dio,
+        hooks: hooks,
+        defaults: config.defaultHeaders,
+      ),
       SinewAuthInterceptor(
         dio,
         tokenSource: tokenSource,
         anonymousPaths: config.anonymousPaths,
       ),
+      SinewHooksInterceptor(hooks: hooks),
       SinewErrorBodyInterceptor(reader: config.errorBodyReader),
       ...extraInterceptors,
       if (config.logHttp) SinewLogInterceptor(logger: logger),
     ]);
+    hooks.attached(dio);
     return dio;
   }
 
@@ -65,6 +79,16 @@ abstract final class SinewHttp {
   static void resetAuth(Dio dio) {
     for (final auth in dio.interceptors.whereType<SinewAuthInterceptor>()) {
       auth.reset();
+    }
+  }
+
+  /// Devtools' "Expire access token": the next request from [dio] that
+  /// carries a token sends an invalid one instead, so the backend answers 401
+  /// and the real refresh runs. Needs [SinewHooksInterceptor] on [dio], which
+  /// the preset installs. Only devtools calls it.
+  static void debugExpireToken(Dio dio) {
+    for (final hooks in dio.interceptors.whereType<SinewHooksInterceptor>()) {
+      hooks.expireNextToken();
     }
   }
 }
