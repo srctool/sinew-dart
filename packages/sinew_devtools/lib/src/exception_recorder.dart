@@ -124,8 +124,9 @@ final class ExceptionRecorder {
   /// How close to the last time a repeat must be to merge.
   final Duration dedupeWindow;
 
-  /// What's hidden before a row is stored.
-  final Redaction redaction;
+  /// What's hidden before a record is stored. `SinewDevTools(redaction:)`
+  /// sets the app's rules.
+  Redaction redaction;
 
   final DateTime Function() _clock;
   final _records = ValueNotifier<List<ExceptionRecord>>(const []);

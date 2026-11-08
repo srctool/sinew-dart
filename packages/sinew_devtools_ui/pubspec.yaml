@@ -16,6 +16,7 @@ dependencies:
   sinew_l10n: ^0.1.0-dev.1
 
 dev_dependencies:
+  sinew_testing: ^0.1.0-dev.1   # FakeKeyValueStore, FakeSecureStore, mockHttp
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0

@@ -266,8 +266,9 @@ final class NetworkRecorder {
   /// How many records are kept.
   final int capacity;
 
-  /// What's hidden before a record is stored.
-  final Redaction redaction;
+  /// What's hidden before a record is stored. `SinewDevTools(redaction:)`
+  /// sets the app's rules.
+  Redaction redaction;
 
   final _records = ValueNotifier<List<NetworkRecord>>(const []);
   var _ids = 0;

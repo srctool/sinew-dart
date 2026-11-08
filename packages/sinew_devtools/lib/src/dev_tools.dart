@@ -66,6 +66,19 @@ abstract final class DevTools {
   /// Forgets what belongs to the signed-in user: the network records. Call it
   /// from the app's sign-out.
   static void clearUserData() => network.clear();
+
+  static final _isOpen = ValueNotifier<bool>(false);
+
+  /// Whether the dashboard is open.
+  static ValueListenable<bool> get isOpen => _isOpen;
+
+  /// Opens the dashboard, from any trigger: the app's own gesture with
+  /// `CustomLauncher`, or `DevToolsMenuItem`'s row. It does nothing until
+  /// `SinewDevTools` is on screen.
+  static void open() => _isOpen.value = true;
+
+  /// Closes the dashboard.
+  static void close() => _isOpen.value = false;
 }
 
 /// Chains [onError] into `FlutterError.onError` and

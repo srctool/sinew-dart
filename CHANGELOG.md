@@ -3,6 +3,13 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- S6 `sinew_devtools_ui` (#45): the overlay and every built-in page, the same as Kotlin's.
+  - `SinewDevTools(child:, sections:, ribbon:, launcher:, redaction:, stores:, changelog:, hosts:, showUncaughtErrors:, preferences:)` and `DevToolsMenuItem`. The dashboard is its own `MaterialApp`, so its own theme and navigator. System back on its first screen closes it.
+  - `devToolsMarker` (`sinew-devtools-included-7f3a`) is referenced by `SinewDevTools`, for the gating check.
+  - `DevToolSection`, `DevToolPage`, `DevToolGroup`, `DevToolToggle`, `DevToolAction`, `BuildRibbon`, `FloatingLauncher`, `MenuLauncher` and `CustomLauncher`.
+  - The same pages and rules as Kotlin. `showUncaughtErrors` defaults to on except in debug.
+  - `DevTools.open()`, `close()` and `isOpen`. The recorders' `redaction` can be set. `sinew_devtools` re-exports `InspectableStore`, `KeyValueStore` and `SecureStore`, so the UI needs no edge of its own to storage.
+  - Tests: widget tests and golden tests, with golden references per OS under `test/goldens/<os>/`. CI uploads the Linux set it records.
 - S6 `sinew_network` and `sinew_devtools` (#44, the rest): devtools' way into a client. Closes #44 with the recorders that landed before.
   - `SinewHttpHooks` (`attached`, `hostOverride`, `fault`, `record`; `none` by default). The preset now runs `SinewRecorderInterceptor` **before** the auth interceptor, so it sees a 401 before auth replays it, and `SinewHooksInterceptor` **after** it, so a forced 401 runs the real refresh. `SinewHttp.dio(…, hooks:)` takes them, and so does `mockHttp`.
   - A `FaultDecision` waits, drops the connection (a `connectionError`, so `NoInternetConnectionException`) or answers a status and body without reaching the network.
