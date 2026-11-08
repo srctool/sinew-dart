@@ -12,6 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dio: ^5.11.1
   sinew_exception: ^0.1.0-dev.1
   sinew_models: ^0.1.0-dev.1
   sinew_network: ^0.1.0-dev.1

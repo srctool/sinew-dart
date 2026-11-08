@@ -3,6 +3,13 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- S6 `sinew_network` and `sinew_devtools` (#44, the rest): devtools' way into a client. Closes #44 with the recorders that landed before.
+  - `SinewHttpHooks` (`attached`, `hostOverride`, `fault`, `record`; `none` by default). The preset now runs `SinewRecorderInterceptor` **before** the auth interceptor, so it sees a 401 before auth replays it, and `SinewHooksInterceptor` **after** it, so a forced 401 runs the real refresh. `SinewHttp.dio(…, hooks:)` takes them, and so does `mockHttp`.
+  - A `FaultDecision` waits, drops the connection (a `connectionError`, so `NoInternetConnectionException`) or answers a status and body without reaching the network.
+  - `SinewHttp.debugExpireToken(dio)`: the next request that carries a token sends an invalid one, so the real 401 → refresh runs.
+  - Devtools: `FaultRule` and `FaultRules` (in memory only, newest match wins), `HostOverride` (the choice remembered in `sinew.devtools.apiHost`), and `DevTools.httpHooks`, `faults`, `hosts`, `canReplay`, `replay` and `expireAccessToken`.
+  - A replay goes through the `Dio` that sent the record, with a fresh token and the client's own headers. A record that lost a secret or was cleared can't be replayed.
+  - Fixed while testing: a JSON string response (`"v2"`) is recorded as JSON, not as bare text that redaction then masked whole.
 - S6 `sinew_devtools` (#44, the recorders): this part of #44 lands with Kotlin's #43. The HTTP hooks, `FaultRules`, `HostOverride` and replay follow with Kotlin's #44.
   - `NetworkRecorder` (capacity 200, newest first, a `ValueListenable`): `record(NetworkExchange)` redacts before storing, using the client's `defaultHeaders` too. `recordCacheServe` covers responses served from a cache.
   - `NetworkRecord.replayable` is true only when nothing but `Authorization` or the client's own headers lost a value and the body wasn't cut or binary. `asText()` and `asCurl()` give the redacted record.
