@@ -29,6 +29,14 @@ jobs:
       - run: melos run analyze
       - run: melos run graph
       - run: melos run test
+      - name: Keep the devtools goldens
+        # References are per OS; a test records the ones this OS lacks, so the Linux set can be committed from here.
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: devtools-goldens-linux
+          path: packages/sinew_devtools_ui/test/goldens/linux
+          if-no-files-found: ignore
       - name: Committed localizations are up to date
         run: |
           melos run l10n

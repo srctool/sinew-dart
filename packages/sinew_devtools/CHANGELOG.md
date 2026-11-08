@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `DevTools.open()`, `close()` and `isOpen`; settable `redaction` on both recorders; re-exports `InspectableStore`, `KeyValueStore` and `SecureStore`.
+
 - `FaultRule`, `FaultRules`, `HostOverride`, and `DevTools.httpHooks`, `faults`, `hosts`, `canReplay`, `replay` and `expireAccessToken`. `NetworkExchange.requestBodyStreamed`.
 
 - `NetworkRecorder` and `NetworkRecord` (`replayable`, `asText()`, `asCurl()`), `ExceptionRecorder` with de-duplication, `DevToolsCrashReporter`, and `DevTools` (`network`, `exceptions`, `captureUncaughtErrors()`, `clearUserData()`). `Redaction.redactText` for free text.
