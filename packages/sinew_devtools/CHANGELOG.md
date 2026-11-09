@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `DevToolsGate`: `flavor`, the `const` `enabled`, and `assertMatchesFlavor()`.
+
 - `DevTools.open()`, `close()` and `isOpen`; settable `redaction` on both recorders; re-exports `InspectableStore`, `KeyValueStore` and `SecureStore`.
 
 - `FaultRule`, `FaultRules`, `HostOverride`, and `DevTools.httpHooks`, `faults`, `hosts`, `canReplay`, `replay` and `expireAccessToken`. `NetworkExchange.requestBodyStreamed`.

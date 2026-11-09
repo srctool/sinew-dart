@@ -19,7 +19,8 @@ const buttonYKey = 'sinew.devtools.button.y';
 
 /// The developer tools around the app: wraps [child] with the launcher, the
 /// dashboard and the ribbon. Put it in `main`, behind `DevToolsGate.enabled`,
-/// so production builds tree-shake it away:
+/// so production builds tree-shake it away. Where the gate is off, it builds
+/// only [child] anyway:
 ///
 /// ```dart
 /// runApp(DevToolsGate.enabled
@@ -88,6 +89,7 @@ class _SinewDevToolsState extends State<SinewDevTools> {
   @override
   void initState() {
     super.initState();
+    if (!DevToolsGate.enabled) return;
     DevTools.captureUncaughtErrors();
     _apply();
   }
@@ -95,7 +97,7 @@ class _SinewDevToolsState extends State<SinewDevTools> {
   @override
   void didUpdateWidget(SinewDevTools old) {
     super.didUpdateWidget(old);
-    _apply();
+    if (DevToolsGate.enabled) _apply();
   }
 
   void _apply() {
@@ -107,6 +109,9 @@ class _SinewDevToolsState extends State<SinewDevTools> {
 
   @override
   Widget build(BuildContext context) {
+    // A const `false` here removes everything below from the build, even
+    // when `main` forgot the gate: production shows only the app.
+    if (!DevToolsGate.enabled) return widget.child;
     final sections = [
       sinewSection(
         stores: widget.stores,
@@ -226,13 +231,15 @@ class DevToolsMenuItem extends StatelessWidget {
   const DevToolsMenuItem({super.key});
 
   @override
-  Widget build(BuildContext context) => const ListTile(
-    key: ValueKey('sinew-devtools-menu-item'),
-    leading: CircleAvatar(child: Text('D')),
-    title: Text('Developer tools'),
-    subtitle: Text('Network, exceptions, stores, faults'),
-    onTap: DevTools.open,
-  );
+  Widget build(BuildContext context) => !DevToolsGate.enabled
+      ? const SizedBox.shrink()
+      : const ListTile(
+          key: ValueKey('sinew-devtools-menu-item'),
+          leading: CircleAvatar(child: Text('D')),
+          title: Text('Developer tools'),
+          subtitle: Text('Network, exceptions, stores, faults'),
+          onTap: DevTools.open,
+        );
 }
 
 /// The build label, the active host and "faults on", in the top-right
