@@ -7,6 +7,7 @@ export 'package:sinew_storage/sinew_storage.dart'
     show InspectableStore, KeyValueStore, SecureStore;
 
 export 'src/dev_tools.dart' show DevTools;
+export 'src/dev_tools_gate.dart';
 export 'src/exception_recorder.dart';
 export 'src/fault_rules.dart';
 export 'src/host_override.dart';

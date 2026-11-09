@@ -27,6 +27,8 @@ dependencies:
   sinew_storage: ^0.1.0-dev.1
   sinew_exception: ^0.1.0-dev.1
   sinew_models: ^0.1.0-dev.1
+  sinew_devtools: ^0.1.0-dev.1       # behind DevToolsGate.enabled in main
+  sinew_devtools_ui: ^0.1.0-dev.1
 
 dev_dependencies:
   flutter_test:

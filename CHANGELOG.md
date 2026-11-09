@@ -3,6 +3,11 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- S6 `sinew_devtools` (#46): `DevToolsGate`.
+  - `DevToolsGate.flavor` (the `SINEW_FLAVOR` define) and `DevToolsGate.enabled`, a `const`: true in debug, and in release or profile for a non-production flavor; false for `production` or no define, so a forgotten define fails safe.
+  - `DevToolsGate.assertMatchesFlavor()` throws a `StateError` in every build mode when the define names another flavor than the one being run (`appFlavor`). A missing define, or an app without flavors, passes.
+  - `SinewDevTools` and `DevToolsMenuItem` check the gate themselves too, so a production build that forgot it in `main` still shows only the app and drops their code.
+  - The example runs through the gate. A release web build with `SINEW_FLAVOR=production` contains no `devToolsMarker`; with `staging` it does.
 - S6 `sinew_devtools_ui` (#45): the overlay and every built-in page, the same as Kotlin's.
   - `SinewDevTools(child:, sections:, ribbon:, launcher:, redaction:, stores:, changelog:, hosts:, showUncaughtErrors:, preferences:)` and `DevToolsMenuItem`. The dashboard is its own `MaterialApp`, so its own theme and navigator. System back on its first screen closes it.
   - `devToolsMarker` (`sinew-devtools-included-7f3a`) is referenced by `SinewDevTools`, for the gating check.
