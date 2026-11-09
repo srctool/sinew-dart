@@ -3,6 +3,9 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- S6 devtools gating in CI (#47): the `devtools-gating` job proves production builds carry no devtools code.
+  - `tool/devtools_gating.sh` builds the example for one target (APK, iOS, web JS, web Wasm), mode and flavor, and counts `devToolsMarker` in the compiled output (`libapp.so`, `App.framework`, `main.dart.js`, `main.dart.wasm`).
+  - CI runs it for the production release and profile builds, which must not contain the marker, and for a staging release build, which must.
 - S6 `sinew_devtools` (#46): `DevToolsGate`.
   - `DevToolsGate.flavor` (the `SINEW_FLAVOR` define) and `DevToolsGate.enabled`, a `const`: true in debug, and in release or profile for a non-production flavor; false for `production` or no define, so a forgotten define fails safe.
   - `DevToolsGate.assertMatchesFlavor()` throws a `StateError` in every build mode when the define names another flavor than the one being run (`appFlavor`). A missing define, or an app without flavors, passes.
