@@ -3,6 +3,12 @@ description: "Domain, Remote, Entity, envelope bases, paging shapes, ViewState a
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
+documentation: https://sinew.srctool.com
+topics:
+  - architecture
+  - models
+  - result
+  - error-handling
 resolution: workspace
 
 environment:

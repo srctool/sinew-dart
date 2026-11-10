@@ -3,6 +3,18 @@ description: "The DevTools overlay, dashboard and inspector pages."
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
+documentation: https://sinew.srctool.com
+topics:
+  - devtools
+  - debugging
+  - ui
+screenshots:
+  - description: 'The dashboard, light: the Network Monitor, the Exception Log, the stores, fault injection and your own sections.'
+    path: screenshots/home-light.png
+  - description: 'The dashboard, dark.'
+    path: screenshots/home-dark.png
+  - description: 'The Network Monitor: every request recorded with its secrets already hidden.'
+    path: screenshots/network-monitor.png
 resolution: workspace
 
 environment:

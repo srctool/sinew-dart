@@ -3,6 +3,11 @@ description: "DevTools capture: recorders, redaction, fault rules and host overr
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
+documentation: https://sinew.srctool.com
+topics:
+  - devtools
+  - debugging
+  - networking
 resolution: workspace
 
 environment:

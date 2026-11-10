@@ -3,6 +3,11 @@ description: "Fakes and test helpers for apps built on Sinew. A dev dependency o
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
+documentation: https://sinew.srctool.com
+topics:
+  - testing
+  - mocks
+  - fakes
 resolution: workspace
 
 environment:

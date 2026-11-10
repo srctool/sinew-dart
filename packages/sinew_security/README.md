@@ -1,8 +1,42 @@
 # sinew_security
 
-FieldCipher and BiometricVault on vetted crypto per platform.
+[![pub package](https://img.shields.io/pub/v/sinew_security.svg)](https://pub.dev/packages/sinew_security)
+[![License](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-sinew.srctool.com-blue.svg)](https://sinew.srctool.com)
 
-Part of [Sinew](https://github.com/srctool/sinew). Status: milestone S4.
+**`FieldCipher` and `BiometricVault` on vetted crypto per platform.**
+
+Field encryption and a biometric vault that never invent a cipher: AES-256-GCM from vetted libraries on every platform, keys kept in the platform's key storage, and a fresh nonce for every value.
+
+## Features
+
+- `FieldCipher`: `encrypt` and `decrypt` with a `context` bound as associated data, and `rotateKey` that keeps old values readable
+- `BiometricVault`: store a secret behind a biometric match with `store`, release it only by a real match with `unlock`, and report why not as a user outcome, not an error
+- One value layout on every platform, so any platform decrypts any other's output
+
+## Getting started
+
+```sh
+flutter pub add sinew_security
+```
+
+## Usage
+
+```dart
+final cipher = await FieldCipher.create();
+final sealed = await cipher.encrypt('Alice', context: 'customer:42');
+final plain = await cipher.decrypt(sealed, context: 'customer:42');
+```
+
+A value decrypted with another `context` fails with `DecryptionFailed`, so a value copied to another field doesn't decrypt.
+
+```dart
+final vault = BiometricVault.create();
+if (await vault.availability() == BiometricAvailability.available) {
+  await vault.store(refreshToken, reason: 'Sign in with biometrics next time');
+}
+final unlocked = await vault.unlock(reason: 'Sign in');
+```
 
 ## Requirements
 
@@ -28,3 +62,21 @@ applies (on macOS, the Keychain Sharing entitlement).
 
 On Android, `store` shows the prompt (the key needs a match to encrypt too); iOS stores without one. A secret is
 released only by a real match: no prompt sits in front of a normal read.
+
+## Related packages
+
+Sinew is one architecture for Flutter and Kotlin, released as a set of packages at one version.
+
+- [`sinew_storage`](https://pub.dev/packages/sinew_storage)
+- [`sinew_testing`](https://pub.dev/packages/sinew_testing)
+
+## Documentation
+
+- **Usage docs:** [sinew.srctool.com](https://sinew.srctool.com)
+- **API reference:** [pub.dev/documentation/sinew_security](https://pub.dev/documentation/sinew_security/latest/)
+- **Source and issues:** [srctool/sinew-dart](https://github.com/srctool/sinew-dart)
+- **Design and decisions:** the [Guide](https://sinew-dev.srctool.com/guide)
+
+## License
+
+Apache 2.0, see [LICENSE](LICENSE).
