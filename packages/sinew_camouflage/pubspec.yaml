@@ -3,7 +3,6 @@ description: "PagingState.toCamo() for Camouflage's CamoPagedList."
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
-publish_to: none   # until camouflage_core is on pub.dev: remove this and the git pin below before Sinew 1.0
 resolution: workspace
 
 environment:
@@ -13,12 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # Camouflage from source at a pinned commit, until it publishes v0.1 (its milestone M15).
-  camouflage_core:
-    git:
-      url: https://github.com/srctool/camouflage-dart.git
-      path: packages/camouflage_core
-      ref: 97b0d6da2e090161398308c4de6e7e2dc5b21128
+  camouflage_core: ^0.1.1
   sinew_models: ^0.1.0-dev.1
   sinew_paging: ^0.1.0-dev.1
   sinew_exception: ^0.1.0-dev.1

@@ -3,6 +3,9 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- S7 Camouflage from pub.dev (#83): Sinew builds against Camouflage's released packages instead of their source.
+  - `sinew_camouflage` depends on `camouflage_core: ^0.1.1` and the example on `camouflage_skin_minimal: ^0.1.1`. The `git` dependencies, the workspace's `dependency_overrides` and `publish_to: none` are gone, so `sinew_camouflage` can be published.
+  - Nothing Sinew uses changed between the old pin and 0.1.1 (`CamoTouchSemantics`, `CamoClipRRect` and accessibility fixes in components Sinew doesn't use).
 - S6 devtools gating in CI (#47): the `devtools-gating` job proves production builds carry no devtools code.
   - `tool/devtools_gating.sh` builds the example for one target (APK, iOS, web JS, web Wasm), mode and flavor, and counts `devToolsMarker` in the compiled output (`libapp.so`, `App.framework`, `main.dart.js`, `main.dart.wasm`).
   - CI runs it for the production release and profile builds, which must not contain the marker, and for a staging release build, which must.
