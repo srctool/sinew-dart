@@ -3,6 +3,11 @@ description: "Riverpod notifier mixins, hooks and AsyncValue conversions for Sin
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
+documentation: https://sinew.srctool.com
+topics:
+  - riverpod
+  - state-management
+  - architecture
 resolution: workspace
 
 environment:

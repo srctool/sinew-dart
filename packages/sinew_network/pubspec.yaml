@@ -3,6 +3,12 @@ description: "SinewHttp (Dio), the auth layer, processApiCall, retry, polling an
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
+documentation: https://sinew.srctool.com
+topics:
+  - http
+  - dio
+  - networking
+  - authentication
 resolution: workspace
 
 environment:

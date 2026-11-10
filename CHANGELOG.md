@@ -3,6 +3,11 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- S7 Package READMEs, examples and pub.dev metadata (#85): every package is ready for its page on pub.dev.
+  - A real README for each of the 14 packages: what it is for, features, install, usage, related packages and links. The setup text that `sinew_security`, `sinew_storage` and `sinew_riverpod_providers` already had (CMake for `webcrypto`, the biometric setup, the Riverpod overrides) is kept.
+  - An `example/` folder in each: a runnable `main.dart` for `sinew_models`, `sinew_exception`, `sinew_paging` and `sinew_presentation`, and an `example/README.md` for the Flutter packages that points at the example app.
+  - `documentation` and `topics` in every `pubspec.yaml`, and three screenshots for `sinew_devtools_ui`, made with a real font by `test/screenshots_test.dart` (it only runs with `SINEW_SCREENSHOTS=1`).
+  - `pana` gives `sinew_models` and `sinew_presentation` 160 of 160, the two packages with no unpublished Sinew dependency. The names in every README were checked against the code.
 - S7 Camouflage from pub.dev (#83): Sinew builds against Camouflage's released packages instead of their source.
   - `sinew_camouflage` depends on `camouflage_core: ^0.1.1` and the example on `camouflage_skin_minimal: ^0.1.1`. The `git` dependencies, the workspace's `dependency_overrides` and `publish_to: none` are gone, so `sinew_camouflage` can be published.
   - Nothing Sinew uses changed between the old pin and 0.1.1 (`CamoTouchSemantics`, `CamoClipRRect` and accessibility fixes in components Sinew doesn't use).

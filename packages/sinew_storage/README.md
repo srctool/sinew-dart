@@ -1,8 +1,25 @@
 # sinew_storage
 
-SecureStore, KeyValueStore, processStorageCall and pagedQuery.
+[![pub package](https://img.shields.io/pub/v/sinew_storage.svg)](https://pub.dev/packages/sinew_storage)
+[![License](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-sinew.srctool.com-blue.svg)](https://sinew.srctool.com)
 
-Part of [Sinew](https://github.com/srctool/sinew). Status: milestone S4.
+**`SecureStore`, `KeyValueStore`, `processStorageCall` and `pagedQuery`.**
+
+Local storage with the same error model as the network: a corrupted file, a full disk or an unreadable value becomes a typed exception instead of a crash, and a reinstall starts with an empty secure store.
+
+## Features
+
+- `KeyValueStore`: plain preferences, namespaced by name, typed reads that return `null` for a value of another type
+- `SecureStore`: small secrets, encrypted with `FieldCipher`, with an undecryptable value read as absent
+- `processStorageCall` and `storageHandlers`: turn storage failures into `LocalStorageCorruptionException`, `StorageFullException`, `StorageReadException` and `StorageWriteException`
+- `pagedQuery`: a local list that pages with `Pager.offset` exactly like a remote one, and `InspectableStore` for the devtools
+
+## Getting started
+
+```sh
+flutter pub add sinew_storage
+```
 
 ## KeyValueStore
 
@@ -75,3 +92,22 @@ Future<PagingEntity<OrderRow>> page(int page, int limit) => pagedQuery(page, lim
 
 `KeyValueStore` and `SecureStore` are `InspectableStore`s (`name`, sorted `keys()`, `read(key)` as text), which the
 devtools browse; implement it on a DAO to show up there too.
+
+## Related packages
+
+Sinew is one architecture for Flutter and Kotlin, released as a set of packages at one version.
+
+- [`sinew_security`](https://pub.dev/packages/sinew_security)
+- [`sinew_exception`](https://pub.dev/packages/sinew_exception)
+- [`sinew_paging`](https://pub.dev/packages/sinew_paging)
+
+## Documentation
+
+- **Usage docs:** [sinew.srctool.com](https://sinew.srctool.com)
+- **API reference:** [pub.dev/documentation/sinew_storage](https://pub.dev/documentation/sinew_storage/latest/)
+- **Source and issues:** [srctool/sinew-dart](https://github.com/srctool/sinew-dart)
+- **Design and decisions:** the [Guide](https://sinew-dev.srctool.com/guide)
+
+## License
+
+Apache 2.0, see [LICENSE](LICENSE).

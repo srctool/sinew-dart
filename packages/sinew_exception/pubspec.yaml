@@ -3,6 +3,12 @@ description: "SinewException types, handlers, processCall, CrashReporter and Loc
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
+documentation: https://sinew.srctool.com
+topics:
+  - error-handling
+  - exception
+  - architecture
+  - localization
 resolution: workspace
 
 environment:

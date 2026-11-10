@@ -3,6 +3,12 @@ description: "FieldCipher and BiometricVault on vetted crypto per platform."
 version: 0.1.0-dev.1
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
+documentation: https://sinew.srctool.com
+topics:
+  - encryption
+  - cryptography
+  - biometrics
+  - security
 resolution: workspace
 
 environment:
