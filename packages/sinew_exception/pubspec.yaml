@@ -1,6 +1,6 @@
 name: sinew_exception
 description: "SinewException types, handlers, processCall, CrashReporter and Localizer."
-version: 0.1.0-dev.1
+version: 1.0.0
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
 documentation: https://sinew.srctool.com
@@ -15,7 +15,7 @@ environment:
   sdk: ^3.13.0
 
 dependencies:
-  sinew_models: ^0.1.0-dev.1
+  sinew_models: ^1.0.0
 
 dev_dependencies:
   lints: ^6.0.0

@@ -1,6 +1,6 @@
 name: sinew_camouflage
 description: "PagingState.toCamo() for Camouflage's CamoPagedList."
-version: 0.1.0-dev.1
+version: 1.0.0
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
 documentation: https://sinew.srctool.com
@@ -18,10 +18,10 @@ dependencies:
   flutter:
     sdk: flutter
   camouflage_core: ^0.1.1
-  sinew_models: ^0.1.0-dev.1
-  sinew_paging: ^0.1.0-dev.1
-  sinew_exception: ^0.1.0-dev.1
-  sinew_l10n: ^0.1.0-dev.1
+  sinew_models: ^1.0.0
+  sinew_paging: ^1.0.0
+  sinew_exception: ^1.0.0
+  sinew_l10n: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,6 @@
 name: sinew_testing
 description: "Fakes and test helpers for apps built on Sinew. A dev dependency only."
-version: 0.1.0-dev.1
+version: 1.0.0
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
 documentation: https://sinew.srctool.com
@@ -17,12 +17,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sinew_models: ^0.1.0-dev.1
-  sinew_exception: ^0.1.0-dev.1
-  sinew_paging: ^0.1.0-dev.1
-  sinew_network: ^0.1.0-dev.1
-  sinew_storage: ^0.1.0-dev.1
-  sinew_security: ^0.1.0-dev.1
+  sinew_models: ^1.0.0
+  sinew_exception: ^1.0.0
+  sinew_paging: ^1.0.0
+  sinew_network: ^1.0.0
+  sinew_storage: ^1.0.0
+  sinew_security: ^1.0.0
   dio: ^5.11.1
   test_api: ^0.7.0
   web: ^1.1.0
