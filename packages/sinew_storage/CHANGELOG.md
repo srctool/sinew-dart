@@ -1,4 +1,4 @@
-## 0.1.0-dev.1
+## 1.0.0
 
 - S4: `pagedQuery(page, limit, fetch, {firstPage = 1})`: one `limit + 1` query per page gives `hasNextPage`, `hasPreviousPage` is `page > firstPage`; a non-positive limit, a page before `firstPage`, or an offset past 2^53 - 1 is refused before the query. `InspectableStore` (`name`, `keys()`, `read(key)`), implemented by `KeyValueStore` and `SecureStore`.
 - S4: `processStorageCall(module, function, access, block)` with `StorageAccess { read, write }`, and the public `storageHandlers` table: corruption (`DecryptionFailed`, `FormatException`, a plugin's failed decryption) → `LocalStorageCorruptionException`; out of space (errno 28 or 39/112 on Windows, "No space left on device", SQLite's "database or disk is full", `QuotaExceededError`) → `StorageFullException`; other storage errors (`PlatformException`, `IOException`, `SqliteException`, browser storage `DOMException`s) → `StorageReadException` / `StorageWriteException`. `sinew_storage` now lists `sinew_models`.

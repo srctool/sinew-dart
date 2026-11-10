@@ -1,6 +1,6 @@
 name: sinew_network
 description: "SinewHttp (Dio), the auth layer, processApiCall, retry, polling and NetworkChecker."
-version: 0.1.0-dev.1
+version: 1.0.0
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
 documentation: https://sinew.srctool.com
@@ -18,14 +18,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sinew_exception: ^0.1.0-dev.1
-  sinew_models: ^0.1.0-dev.1
+  sinew_exception: ^1.0.0
+  sinew_models: ^1.0.0
   dio: ^5.11.1
   connectivity_plus: ^7.3.2
 
 dev_dependencies:
   fake_async: ^1.3.3
-  sinew_testing: ^0.1.0-dev.1   # FakeTokenSource
+  sinew_testing: ^1.0.0   # FakeTokenSource
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0

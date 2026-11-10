@@ -1,6 +1,6 @@
 name: sinew_devtools_ui
 description: "The DevTools overlay, dashboard and inspector pages."
-version: 0.1.0-dev.1
+version: 1.0.0
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
 documentation: https://sinew.srctool.com
@@ -24,11 +24,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sinew_devtools: ^0.1.0-dev.1
-  sinew_l10n: ^0.1.0-dev.1
+  sinew_devtools: ^1.0.0
+  sinew_l10n: ^1.0.0
 
 dev_dependencies:
-  sinew_testing: ^0.1.0-dev.1   # FakeKeyValueStore, FakeSecureStore, mockHttp
+  sinew_testing: ^1.0.0   # FakeKeyValueStore, FakeSecureStore, mockHttp
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0

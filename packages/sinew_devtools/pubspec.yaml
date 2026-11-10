@@ -1,6 +1,6 @@
 name: sinew_devtools
 description: "DevTools capture: recorders, redaction, fault rules and host override."
-version: 0.1.0-dev.1
+version: 1.0.0
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
 documentation: https://sinew.srctool.com
@@ -18,13 +18,13 @@ dependencies:
   flutter:
     sdk: flutter
   dio: ^5.11.1
-  sinew_exception: ^0.1.0-dev.1
-  sinew_models: ^0.1.0-dev.1
-  sinew_network: ^0.1.0-dev.1
-  sinew_storage: ^0.1.0-dev.1
+  sinew_exception: ^1.0.0
+  sinew_models: ^1.0.0
+  sinew_network: ^1.0.0
+  sinew_storage: ^1.0.0
 
 dev_dependencies:
-  sinew_testing: ^0.1.0-dev.1   # RecordingCrashReporter
+  sinew_testing: ^1.0.0   # RecordingCrashReporter
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0

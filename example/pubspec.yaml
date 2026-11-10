@@ -13,18 +13,18 @@ dependencies:
   camouflage_core: ^0.1.1
   camouflage_skin_minimal: ^0.1.1
   flutter_riverpod: ^3.4.3
-  sinew_paging: ^0.1.0-dev.1
-  sinew_riverpod: ^0.1.0-dev.1
-  sinew_presentation: ^0.1.0-dev.1
-  sinew_network: ^0.1.0-dev.1
-  sinew_camouflage: ^0.1.0-dev.1
-  sinew_l10n: ^0.1.0-dev.1
-  sinew_security: ^0.1.0-dev.1
-  sinew_storage: ^0.1.0-dev.1
-  sinew_exception: ^0.1.0-dev.1
-  sinew_models: ^0.1.0-dev.1
-  sinew_devtools: ^0.1.0-dev.1       # behind DevToolsGate.enabled in main
-  sinew_devtools_ui: ^0.1.0-dev.1
+  sinew_paging: ^1.0.0
+  sinew_riverpod: ^1.0.0
+  sinew_presentation: ^1.0.0
+  sinew_network: ^1.0.0
+  sinew_camouflage: ^1.0.0
+  sinew_l10n: ^1.0.0
+  sinew_security: ^1.0.0
+  sinew_storage: ^1.0.0
+  sinew_exception: ^1.0.0
+  sinew_models: ^1.0.0
+  sinew_devtools: ^1.0.0       # behind DevToolsGate.enabled in main
+  sinew_devtools_ui: ^1.0.0
 
 dev_dependencies:
   flutter_test:
