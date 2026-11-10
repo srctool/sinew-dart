@@ -61,6 +61,7 @@ final orderListProvider = NotifierProvider<OrderList, OrderListState>(
   OrderList.new,
 );
 
+// region notifier
 /// Turns the page's events into loads, on Sinew's Riverpod mixins.
 class OrderList extends Notifier<OrderListState>
     with
@@ -91,3 +92,4 @@ class OrderList extends Notifier<OrderListState>
     update: (next) => setState((_) => OrderListState(orders: next)),
   );
 }
+// endregion

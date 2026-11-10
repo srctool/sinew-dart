@@ -8,6 +8,7 @@ Future<String> loadOrder() async {
 }
 
 Future<void> main() async {
+  // region guard
   // A guard turns whatever a call throws into a typed failure, once, where it
   // happened. The handlers say which errors mean what for this layer.
   final result = await processCall<String>(
@@ -23,6 +24,7 @@ Future<void> main() async {
     ],
     loadOrder,
   );
+  // endregion
 
   result.when(
     success: (order, message) => print('Loaded $order'),
