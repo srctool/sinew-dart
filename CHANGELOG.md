@@ -3,6 +3,9 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- S7 publish dry run in CI (#39): a package that would fail to publish fails the pull request, not release day.
+  - The `publish-check` job runs `melos publish --dry-run --yes`, which validates every package as `dart pub publish --dry-run` does (a LICENSE, a README, the files it would upload), and `tool/check_pana.sh`, which scores the packages with pana and fails unless each gets every point.
+  - pana runs `pub get` on the package, so it can only resolve the packages with no Sinew dependency (`sinew_models`, `sinew_presentation`, `sinew_security`) until Sinew is on pub.dev. `tool/check_pana.sh --all` covers every package, for after the first publish.
 - S7 Package READMEs, examples and pub.dev metadata (#85): every package is ready for its page on pub.dev.
   - A real README for each of the 14 packages: what it is for, features, install, usage, related packages and links. The setup text that `sinew_security`, `sinew_storage` and `sinew_riverpod_providers` already had (CMake for `webcrypto`, the biometric setup, the Riverpod overrides) is kept.
   - An `example/` folder in each: a runnable `main.dart` for `sinew_models`, `sinew_exception`, `sinew_paging` and `sinew_presentation`, and an `example/README.md` for the Flutter packages that points at the example app.

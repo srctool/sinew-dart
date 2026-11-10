@@ -42,6 +42,24 @@ jobs:
           melos run l10n
           git diff --exit-code -- packages/sinew_l10n/lib/src/generated
 
+  publish-check:
+    name: Publish check (dry run, pana)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    # Catches a package that would fail to publish before release day: every package goes through
+    # `dart pub publish --dry-run`, and the packages pana can resolve are scored by it. Nothing is published.
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: dart pub global activate melos
+      - run: flutter pub get
+      - run: melos publish --dry-run --yes
+      - name: pana, on the packages with no unpublished Sinew dependency
+        run: tool/check_pana.sh
+
   platforms:
     name: List screen on ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
