@@ -15,6 +15,7 @@ Future<Result<PagingDomain<String>>> fetch(int page, String query) async {
 }
 
 Future<void> main() async {
+  // region pager
   final pager = Pager<String>.offset(fetch);
   var state = const PagingState<String>();
 
@@ -26,4 +27,5 @@ Future<void> main() async {
     await pager.load(LoadType.more, state, update: (next) => state = next);
   }
   print('all pages: ${state.view.dataOrNull?.items}');
+  // endregion
 }

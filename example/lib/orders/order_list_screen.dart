@@ -30,6 +30,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
   }
 
   @override
+  // region screen
   Widget build(BuildContext context) {
     final state = ref.watch(orderListProvider);
     return ColoredBox(
@@ -63,4 +64,5 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
       ),
     );
   }
+  // endregion
 }

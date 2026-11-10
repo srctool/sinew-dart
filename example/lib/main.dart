@@ -12,6 +12,7 @@ import 'orders/order_list_screen.dart';
 /// `toCamo` → `CamoPagedList`, with devtools in debug and non-production
 /// builds (`--dart-define=SINEW_FLAVOR=staging`). A production build
 /// (`SINEW_FLAVOR=production`, or none) compiles them out.
+// region devtools-entry
 void main() {
   DevToolsGate.assertMatchesFlavor();
   const app = ProviderScope(child: SinewExampleApp());
@@ -21,6 +22,7 @@ void main() {
         : app,
   );
 }
+// endregion
 
 /// The example's root widget.
 class SinewExampleApp extends StatelessWidget {

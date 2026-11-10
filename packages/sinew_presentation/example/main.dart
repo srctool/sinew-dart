@@ -2,6 +2,7 @@
 
 import 'package:sinew_presentation/sinew_presentation.dart';
 
+// region counter
 /// The state a page renders.
 final class CounterState {
   const CounterState(this.count);
@@ -23,6 +24,7 @@ final class Counter extends StateEffectHandler<CounterState, ReachedTen> {
     if (state.count == 10) emitEffect(const ReachedTen());
   }
 }
+// endregion
 
 Future<void> main() async {
   final counter = Counter();
