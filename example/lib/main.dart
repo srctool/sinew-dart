@@ -1,6 +1,6 @@
 import 'package:camouflage_core/camouflage_core.dart';
 import 'package:camouflage_skin_minimal/camouflage_skin_minimal.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sinew_devtools/sinew_devtools.dart';
 import 'package:sinew_devtools_ui/sinew_devtools_ui.dart';

@@ -3,6 +3,9 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- Flutter 3.50 (stable since the 1.0.0 release): Material moved out of the framework, and the Android Gradle Plugin floor rose.
+  - `sinew_devtools_ui` and the example import Material from `package:material_ui/material_ui.dart` (`material_ui` ^1.11.0, which needs only Flutter 3.47), instead of the now-deprecated `package:flutter/material.dart`. The code is otherwise unchanged. `--fatal-infos` turned the deprecation into a CI failure on 3.50.
+  - The example's Android Gradle Plugin is 9.1.1, the minimum Flutter 3.50 accepts.
 - S7 publish dry run in CI (#39): a package that would fail to publish fails the pull request, not release day.
   - The `publish-check` job runs `melos publish --dry-run --yes`, which validates every package as `dart pub publish --dry-run` does (a LICENSE, a README, the files it would upload), and `tool/check_pana.sh`, which scores the packages with pana and fails unless each gets every point.
   - pana runs `pub get` on the package, so it can only resolve the packages with no Sinew dependency (`sinew_models`, `sinew_presentation`, `sinew_security`) until Sinew is on pub.dev. `tool/check_pana.sh --all` covers every package, for after the first publish.
