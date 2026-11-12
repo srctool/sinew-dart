@@ -9,6 +9,9 @@ analyzer:
     - windows/**
     - macos/**
     - linux/**
+    # `flutter gen-l10n` output, committed (ADR-22). Flutter 3.50 deprecates the delegates it lists (they moved to
+    # material_ui and cupertino_ui), and the generator, not us, decides what it writes.
+    - lib/src/generated/**
   language:
     strict-casts: true
     strict-inference: true
