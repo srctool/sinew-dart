@@ -3,6 +3,8 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- S7 pana on every package in CI (#39): now that 1.0.0 is on pub.dev, every package can be scored.
+  - The `publish-check` job runs `tool/check_pana.sh --all` (it installs `webp` first, since pana needs `cwebp` for screenshots), so a package that stops scoring every point fails the pull request. pub.dev gives all 14 packages 160 of 160.
 - S7 publish dry run in CI (#39): a package that would fail to publish fails the pull request, not release day.
   - The `publish-check` job runs `melos publish --dry-run --yes`, which validates every package as `dart pub publish --dry-run` does (a LICENSE, a README, the files it would upload), and `tool/check_pana.sh`, which scores the packages with pana and fails unless each gets every point.
   - pana runs `pub get` on the package, so it can only resolve the packages with no Sinew dependency (`sinew_models`, `sinew_presentation`, `sinew_security`) until Sinew is on pub.dev. `tool/check_pana.sh --all` covers every package, for after the first publish.
