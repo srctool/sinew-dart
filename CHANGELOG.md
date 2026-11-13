@@ -4,6 +4,8 @@ All notable changes to Sinew for Dart and Flutter are documented here. Every pac
 
 ## [Unreleased]
 - App services (#91): `ExceptionLayer.service` (`SV`) in `sinew_models`, `AppService`, `ServiceLifetime` and `AppServiceHost` in `sinew_presentation`, and `appServicesProvider` and `appServiceHostProvider` in `sinew_riverpod_providers`. A new public API, so the next release is 1.1.0. `sinew_riverpod_providers` now depends on `sinew_presentation`.
+- S7 pana on every package in CI (#39): now that 1.0.0 is on pub.dev, every package can be scored.
+  - The `publish-check` job runs `tool/check_pana.sh --all` (it installs `webp` first, since pana needs `cwebp` for screenshots), so a package that stops scoring every point fails the pull request. pub.dev gives all 14 packages 160 of 160.
 - Flutter 3.50 (stable since the 1.0.0 release): Material moved out of the framework, and the Android Gradle Plugin floor rose.
   - `sinew_devtools_ui` and the example import Material from `package:material_ui/material_ui.dart` (`material_ui` ^1.11.0, which needs only Flutter 3.47), instead of the now-deprecated `package:flutter/material.dart`. The code is otherwise unchanged. `--fatal-infos` turned the deprecation into a CI failure on 3.50.
   - The example's Android Gradle Plugin is 9.1.1, the minimum Flutter 3.50 accepts.
