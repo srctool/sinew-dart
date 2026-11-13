@@ -13,6 +13,7 @@ dependencies:
   camouflage_core: ^0.1.1
   camouflage_skin_minimal: ^0.1.1
   flutter_riverpod: ^3.4.3
+  material_ui: ^1.11.0
   sinew_paging: ^1.0.0
   sinew_riverpod: ^1.0.0
   sinew_presentation: ^1.0.0
