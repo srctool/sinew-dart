@@ -3,8 +3,19 @@ import 'dart:async';
 import 'package:sinew_exception/sinew_exception.dart';
 import 'package:sinew_models/sinew_models.dart';
 import 'package:sinew_presentation/sinew_presentation.dart';
-import 'package:sinew_testing/sinew_testing.dart';
 import 'package:test/test.dart';
+
+/// Keeps every report. sinew_testing's `RecordingCrashReporter` is the same, but its barrel pulls in Flutter, and this
+/// package's tests run with plain `dart test`.
+final class _Reporter implements CrashReporter {
+  final reports = <SinewException>[];
+
+  List<String> get codes => [for (final report in reports) report.code];
+
+  @override
+  void recordNonFatal(SinewException error, StackTrace? stackTrace) =>
+      reports.add(error);
+}
 
 /// Records its steps in [log]; [failInit] throws, [guardInit] reports through the service guard instead.
 final class _Recorder extends AppService {
@@ -55,13 +66,13 @@ final class _Recorder extends AppService {
 }
 
 void main() {
-  late RecordingCrashReporter reporter;
+  late _Reporter reporter;
   late List<String> log;
   const app = ServiceLifetime.app;
   const session = ServiceLifetime.session;
 
   setUp(() {
-    reporter = RecordingCrashReporter();
+    reporter = _Reporter();
     CrashReporter.install(reporter);
     log = [];
   });
