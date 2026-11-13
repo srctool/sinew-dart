@@ -3,6 +3,7 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- CI and the publish workflow pin Flutter to 3.50.0 instead of following the stable channel, so a new Flutter release can't break the build unannounced. The pin moves in a pull request.
 - S7 pana on every package in CI (#39): now that 1.0.0 is on pub.dev, every package can be scored.
   - The `publish-check` job runs `tool/check_pana.sh --all` (it installs `webp` first, since pana needs `cwebp` for screenshots), so a package that stops scoring every point fails the pull request. pub.dev gives all 14 packages 160 of 160.
 - Flutter 3.50 (stable since the 1.0.0 release): Material moved out of the framework, and the Android Gradle Plugin floor rose.
