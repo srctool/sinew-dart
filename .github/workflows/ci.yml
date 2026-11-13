@@ -47,9 +47,10 @@ jobs:
   publish-check:
     name: Publish check (dry run, pana)
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     # Catches a package that would fail to publish before release day: every package goes through
-    # `dart pub publish --dry-run`, and the packages pana can resolve are scored by it. Nothing is published.
+    # `dart pub publish --dry-run`, and pana, pub.dev's own scorer, must give every package every point. Nothing is
+    # published.
     steps:
       - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
@@ -60,8 +61,10 @@ jobs:
       - run: dart pub global activate melos
       - run: flutter pub get
       - run: melos publish --dry-run --yes
-      - name: pana, on the packages with no unpublished Sinew dependency
-        run: tool/check_pana.sh
+      # pana converts a package's screenshots with cwebp: without it a package that lists screenshots loses 10 points.
+      - run: sudo apt-get update && sudo apt-get install -y webp
+      - name: pana, on every package
+        run: tool/check_pana.sh --all
 
   platforms:
     name: List screen on ${{ matrix.name }}

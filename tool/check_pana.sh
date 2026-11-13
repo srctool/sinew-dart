@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # Scores packages with `pana`, pub.dev's own scorer, and fails unless each gets every point.
-# Usage: tool/check_pana.sh          the packages with no Sinew dependency (the only ones pana can resolve before Sinew is
-#                                    on pub.dev: its pub get can't find an unpublished sibling)
-#        tool/check_pana.sh --all    every package: use it once 1.0.0 is published
+# pana needs `cwebp` (brew install webp, apt install webp) to process screenshots; without it a package that lists
+# screenshots scores 10 points short, which is the tool missing, not the package.
+# Usage: tool/check_pana.sh --all    every package (pana's pub get needs each Sinew dependency on pub.dev, so this works
+#                                    from 1.0.0 on; CI uses it)
+#        tool/check_pana.sh          only the packages with no Sinew dependency, for a checkout whose dependencies are
+#                                    not on pub.dev yet
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
