@@ -8,6 +8,7 @@ sinew_riverpod -> sinew_presentation
 sinew_riverpod -> sinew_models
 sinew_riverpod -> sinew_exception
 sinew_riverpod_providers -> sinew_riverpod
+sinew_riverpod_providers -> sinew_presentation
 sinew_riverpod_providers -> sinew_network
 sinew_riverpod_providers -> sinew_storage
 sinew_network -> sinew_models

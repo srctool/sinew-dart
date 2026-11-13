@@ -1,5 +1,5 @@
-/// Ready Riverpod providers for Sinew's network and storage services, and
-/// `useNetworkChecker`.
+/// Ready Riverpod providers for Sinew's network and storage services, the app
+/// services' host, and `useNetworkChecker`.
 ///
 /// The app overrides [sinewConfigProvider] and [refreshCallProvider] once,
 /// and awaits [secureStoreProvider] at startup. Security services aren't
@@ -10,6 +10,7 @@ library;
 
 import 'src/providers.dart';
 
+export 'src/app_services.dart';
 export 'src/providers.dart';
 export 'src/secure_refresh_token_store.dart';
 export 'src/use_network_checker.dart';

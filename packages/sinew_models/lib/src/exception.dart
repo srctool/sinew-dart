@@ -11,7 +11,11 @@ enum ExceptionLayer {
   repository('R'),
 
   /// A utility outside the layers.
-  utility('UT');
+  utility('UT'),
+
+  /// An app service: work with the app's or the signed-in session's lifetime
+  /// and no UI (a purchase, pub/sub, push).
+  service('SV');
 
   const ExceptionLayer(this.code);
 
