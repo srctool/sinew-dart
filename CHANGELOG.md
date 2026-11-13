@@ -3,6 +3,7 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- CI and the publish workflow pin Flutter to 3.50.0 instead of following the stable channel, so a new Flutter release can't break the build unannounced. The pin moves in a pull request.
 - Flutter 3.50 (stable since the 1.0.0 release): Material moved out of the framework, and the Android Gradle Plugin floor rose.
   - `sinew_devtools_ui` and the example import Material from `package:material_ui/material_ui.dart` (`material_ui` ^1.11.0, which needs only Flutter 3.47), instead of the now-deprecated `package:flutter/material.dart`. The code is otherwise unchanged. `--fatal-infos` turned the deprecation into a CI failure on 3.50.
   - The example's Android Gradle Plugin is 9.1.1, the minimum Flutter 3.50 accepts.
