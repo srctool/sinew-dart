@@ -1,3 +1,7 @@
+## Unreleased
+
+- `ExceptionLayer.service`, the `SV` layer for app services: a failure in a service's own step reads `MODULE-SV-FUNCTION-TYPE`.
+
 ## 1.0.0
 
 - Fix: `ViewState` and `Result` equality ignores type arguments, so a `const` default (`Loading<Never>`) equals an explicit state both ways round.

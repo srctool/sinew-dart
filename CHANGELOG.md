@@ -3,6 +3,8 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+- `tool/check_pana.sh --all` excuses a package that falls short while a Sinew dependency of it changed since the last release tag, and says so: pana scores it against the published dependency, which lacks the change (the app-service providers need `sinew_presentation` 1.1.0). The next release publishes them all together, and from then on every package counts again.
+- App services (#91): `ExceptionLayer.service` (`SV`) in `sinew_models`, `AppService`, `ServiceLifetime` and `AppServiceHost` in `sinew_presentation`, and `appServicesProvider` and `appServiceHostProvider` in `sinew_riverpod_providers`. A new public API, so the next release is 1.1.0. `sinew_riverpod_providers` now depends on `sinew_presentation`.
 - CI and the publish workflow pin Flutter to 3.50.0 instead of following the stable channel, so a new Flutter release can't break the build unannounced. The pin moves in a pull request.
 - S7 pana on every package in CI (#39): now that 1.0.0 is on pub.dev, every package can be scored.
   - The `publish-check` job runs `tool/check_pana.sh --all` (it installs `webp` first, since pana needs `cwebp` for screenshots), so a package that stops scoring every point fails the pull request. pub.dev gives all 14 packages 160 of 160.

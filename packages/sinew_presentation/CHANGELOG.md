@@ -1,3 +1,7 @@
+## Unreleased
+
+- `AppService`, `ServiceLifetime` and `AppServiceHost`: work with the app's or the signed-in session's lifetime and no UI (a purchase, pub/sub, push). `startApp` runs `init` then `listen` for app services in list order; `startSession` and `stopSession` do the same for session services, and `stopSession` destroys them in reverse order. A step that throws is surfaced as an unhandled error, and the service still listens and the others still start. Raised by Graft (#91).
+
 ## 1.0.0
 
 - S2: `EffectEmitter` (buffers while nobody listens, one listener at a time, re-listenable, hands an effect over only to an active, unpaused listener), `StateEffectHandler` (`state`, `states`, `effects`, `@protected` `setState` and `emitEffect`, inert after `dispose`) and `EventActionHandler` (`onEvent` maps an event to an action and runs it without awaiting, so actions run concurrently).
