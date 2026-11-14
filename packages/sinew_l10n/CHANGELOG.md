@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.0
 
 - Nothing changes for users. The generated localizations are left out of this package's own analysis, because Flutter 3.50 deprecates the delegates the generator lists.
 

@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Released with the other packages (lockstep). No changes in this package.
+
 ## 1.0.0
 
 - S4: `pagedQuery(page, limit, fetch, {firstPage = 1})`: one `limit + 1` query per page gives `hasNextPage`, `hasPreviousPage` is `page > firstPage`; a non-positive limit, a page before `firstPage`, or an offset past 2^53 - 1 is refused before the query. `InspectableStore` (`name`, `keys()`, `read(key)`), implemented by `KeyValueStore` and `SecureStore`.

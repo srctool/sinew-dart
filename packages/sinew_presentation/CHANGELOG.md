@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.0
 
 - `AppService`, `ServiceLifetime` and `AppServiceHost`: work with the app's or the signed-in session's lifetime and no UI (a purchase, pub/sub, push). `startApp` runs `init` then `listen` for app services in list order; `startSession` and `stopSession` do the same for session services, and `stopSession` destroys them in reverse order. A step that throws is surfaced as an unhandled error, and the service still listens and the others still start. Raised by Graft (#91).
 

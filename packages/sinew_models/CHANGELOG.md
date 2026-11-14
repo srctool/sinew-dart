@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.0
 
 - `ExceptionLayer.service`, the `SV` layer for app services: a failure in a service's own step reads `MODULE-SV-FUNCTION-TYPE`.
 

@@ -3,6 +3,10 @@
 All notable changes to Sinew for Dart and Flutter are documented here. Every package shares one version (lockstep); each package also keeps its own CHANGELOG for pub.dev.
 
 ## [Unreleased]
+
+## [1.1.0] - 2026-11-14
+
+A minor release: new public API (app services and the `SV` error layer) and nothing removed. Every package is released at this one version (lockstep), 14 packages in all; only `sinew_models`, `sinew_presentation` and `sinew_riverpod_providers` have code changes, and `sinew_riverpod_providers` now needs `sinew_presentation` ^1.1.0. Flutter 3.50 is supported (see below).
 - `tool/check_pana.sh --all` excuses a package that falls short while a Sinew dependency of it changed since the last release tag, and says so: pana scores it against the published dependency, which lacks the change (the app-service providers need `sinew_presentation` 1.1.0). The next release publishes them all together, and from then on every package counts again.
 - App services (#91): `ExceptionLayer.service` (`SV`) in `sinew_models`, `AppService`, `ServiceLifetime` and `AppServiceHost` in `sinew_presentation`, and `appServicesProvider` and `appServiceHostProvider` in `sinew_riverpod_providers`. A new public API, so the next release is 1.1.0. `sinew_riverpod_providers` now depends on `sinew_presentation`.
 - CI and the publish workflow pin Flutter to 3.50.0 instead of following the stable channel, so a new Flutter release can't break the build unannounced. The pin moves in a pull request.

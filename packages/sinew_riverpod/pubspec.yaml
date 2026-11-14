@@ -1,6 +1,6 @@
 name: sinew_riverpod
 description: "Riverpod notifier mixins, hooks and AsyncValue conversions for Sinew's presentation pattern."
-version: 1.0.0
+version: 1.1.0
 repository: https://github.com/srctool/sinew-dart
 issue_tracker: https://github.com/srctool/sinew-dart/issues
 documentation: https://sinew.srctool.com
