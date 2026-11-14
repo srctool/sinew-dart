@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.0
 
 - `appServicesProvider` (override it with the app's services) and `appServiceHostProvider`: reading the host starts the app services, and disposing the container destroys them. The session owner calls `startSession` and `stopSession` on it.
 

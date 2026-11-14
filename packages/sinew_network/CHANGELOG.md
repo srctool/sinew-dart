@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Released with the other packages (lockstep). No changes in this package.
+
 ## 1.0.0
 
 - `SinewHttpHooks`, `FaultDecision`, `HttpExchange`, `SinewRecorderInterceptor` (before auth) and `SinewHooksInterceptor` (after auth: faults, the host override, `debugExpireToken`). `SinewHttp.dio(…, hooks:)` and `SinewHttp.debugExpireToken(dio)`.

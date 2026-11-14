@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Released with the other packages (lockstep). No changes in this package.
+
 ## 1.0.0
 
 - `DevToolsGate`: `flavor`, the `const` `enabled`, and `assertMatchesFlavor()`.

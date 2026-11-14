@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Released with the other packages (lockstep). No changes in this package.
+
 ## 1.0.0
 
 - S4: `BiometricVault` (`create`, `availability`, `isStored`, `store(secret, reason:)`, `unlock(reason:)`, `disable`), with `BiometricStore` (`Stored` | `BiometricFailed`) and `BiometricUnlock` (`Unlocked` | `BiometricFailed`): a plugin with Kotlin's crypto-bound flows. Android: a Keystore key needing a strong biometric match for every use, invalidated by new enrollments, through `BiometricPrompt` + `CryptoObject` (needs `FlutterFragmentActivity`). iOS: a Keychain item with `biometryCurrentSet`, this device only, cleared after a reinstall (`clearOnReinstall`). Unavailable on desktop and web.
