@@ -53,6 +53,8 @@ jobs:
     # published.
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0     # the full history and the release tags: tool/check_pana.sh compares against the last one
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
