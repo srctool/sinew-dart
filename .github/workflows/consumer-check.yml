@@ -1,0 +1,44 @@
+name: Consumer check
+
+# A release from the consumer's side: the example app, outside the workspace so every Sinew package comes from pub.dev,
+# resolves all 14 packages at one version and runs its list screen (tool/consumer_check.sh). Run it after a release:
+#   gh workflow run consumer-check.yml -f version=1.1.0
+# It also runs weekly (the newest Flutter's changes and a yanked package show up here, not in a pull request) and on a
+# pull request that changes it.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The release to check (default: the workspace version)'
+        required: false
+        default: ''
+  schedule:
+    - cron: '17 5 * * 1'
+  pull_request:
+    paths:
+      - '.github/workflows/consumer-check.yml'
+      - 'tool/consumer_check.sh'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: consumer-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  consumer:
+    name: A fresh app on pub.dev, list screen on Linux
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.50.0
+          cache: true
+      - name: Linux desktop build tools
+        run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build libgtk-3-dev libsecret-1-dev xvfb
+      - name: Resolve every package from pub.dev, then run the list screen on a virtual display
+        run: xvfb-run -a tool/consumer_check.sh "${{ inputs.version }}" test linux
